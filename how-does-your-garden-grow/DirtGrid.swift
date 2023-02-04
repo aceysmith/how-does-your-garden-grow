@@ -7,7 +7,7 @@
 
 import SpriteKit
 
-class DirtGrid: SKShapeNode {
+class DirtGrid: SKNode {
     private let horizonalTileCount: Int
     private let verticalTileCount: Int
 
@@ -22,14 +22,18 @@ class DirtGrid: SKShapeNode {
         }
         self.dirtTiles = dirtTiles
         super.init()
-        self.path = CGPath(rect: CGRect(origin: .zero, size: CGSize(width: tileWidth * horizonalTileCount, height: tileWidth * verticalTileCount)), transform: nil)
-        self.fillColor = .brown
         for (index, tile) in self.dirtTiles.enumerated() {
             tile.position = CGPoint(
                 x: (index % horizonalTileCount) * tileWidth,
                 y: (index / horizonalTileCount) * tileWidth
             )
             addChild(tile)
+        }
+    }
+    
+    subscript(row: Int, column: Int) -> DirtTile {
+        get {
+            return dirtTiles[row * horizonalTileCount + column]
         }
     }
     

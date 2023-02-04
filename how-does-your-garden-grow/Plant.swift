@@ -25,7 +25,7 @@ struct Plant {
 }
 
 extension Plant {
-    static func TallBoy() -> Plant {
+    static func tallBoy() -> Plant {
         let downThree = RootSegment(parentDirection: .up, left: nil, right: nil, up: nil, down: nil)
         let downTwo = RootSegment(parentDirection: .up, left: nil, right: nil, up: nil, down: downThree)
         let downOne = RootSegment(parentDirection: .up, left: nil, right: nil, up: nil, down: downTwo)
@@ -34,7 +34,7 @@ extension Plant {
         return Plant(root: root, award: 10, tint: .green)
     }
 
-    static func FighterJet() -> Plant {
+    static func fighterJet() -> Plant {
         let leftWingTop = RootSegment(parentDirection: .down, left: nil, right: nil, up: nil, down: nil)
         let leftWingBottom = RootSegment(parentDirection: .up, left: nil, right: nil, up: nil, down: nil)
         let leftWingMid = RootSegment(parentDirection: .right, left: nil, right: nil, up: leftWingTop, down: leftWingBottom)

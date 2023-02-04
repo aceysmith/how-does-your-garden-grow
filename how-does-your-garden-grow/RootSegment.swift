@@ -13,9 +13,10 @@ struct RootSegment {
         case down
     }
     
-    let parentDirection: Direction
     var grown = false
+    let parentDirection: Direction
     var segments: [RootSegment?]
+
     var left: RootSegment? {
         segments[Direction.left.rawValue]
     }

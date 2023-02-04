@@ -6,12 +6,12 @@
 //
 
 import SpriteKit
-import Foundation
 
 let secondsPerTick = 1.0
+let ticksPerPlant = 10
 
-let horizontalTileCount = 20
-let verticleTileCount = 10
+let horizontalTileCount = 24
+let verticleTileCount = 7
 
 class GameScene: SKScene {
     
@@ -20,15 +20,19 @@ class GameScene: SKScene {
     var dirtGrid: DirtGrid!
     
     override func didMove(to view: SKView) {
+        let tileWidth = Int(floor(view.frame.width / CGFloat(horizontalTileCount)))
         dirtGrid = DirtGrid(
-            tileWidth: Int(floor(view.frame.width / CGFloat(horizontalTileCount))),
+            tileWidth: tileWidth,
             horizonalTileCount: horizontalTileCount,
             verticalTileCount: verticleTileCount
         )
-        dirtGrid.position = CGPoint(x: 0, y: 200)
+        dirtGrid.position = CGPoint(x: (view.frame.width - CGFloat(horizontalTileCount * tileWidth)) / 2, y: 0)
         addChild(dirtGrid)
-        // TODO: Initialize all of the shape/texture nodes
         
+        let background = Background(size: view.frame.size, dirtHeight: verticleTileCount * tileWidth)
+        background.zPosition = -1000
+        addChild(background)
+
         // TODO: Probably easier to have some time delta logic in `update(_ currentTime: TimeInterval)` instead of adding another timer here. &shrug;
         run(
             SKAction.repeatForever(.sequence([
@@ -41,23 +45,23 @@ class GameScene: SKScene {
     }
         
     func update() {
-        // TODO: Answer: Should a new plant go down before or after the garden grows?
         // TODO: Use a level type object to look up which plants to add
         // TODO: Use the current column selection to determine which position to try to add the plant
-        switch tick {
-        case 10:
-            garden.addPlant(position: 0, plant: .TallBoy())
-            break
-        case 20:
-            garden.addPlant(position: 3, plant: .FighterJet())
-            break
-        default: break
-        }
 
         let oldGarden = garden
 
         garden.grow()
-        
+
+        switch tick {
+        case 10:
+            garden.addPlant(position: 0, plant: .tallBoy())
+            break
+        case 20:
+            garden.addPlant(position: 3, plant: .fighterJet())
+            break
+        default: break
+        }
+
         animateGarden(oldGarden: oldGarden, newGarden: garden)
         tick += 1
     }
