@@ -23,6 +23,7 @@
 		5C11AAB6298DFD1C00B48071 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		5C11AAB8298DFD1D00B48071 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		5C11AABB298DFD1D00B48071 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		5C929901298E01A6009C5C68 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -61,6 +62,7 @@
 				5C11AAB5298DFD1C00B48071 /* Main.storyboard */,
 				5C11AAB8298DFD1D00B48071 /* Assets.xcassets */,
 				5C11AABA298DFD1D00B48071 /* LaunchScreen.storyboard */,
+				5C929901298E01A6009C5C68 /* README.md */,
 			);
 			path = "how-does-your-garden-grow";
 			sourceTree = "<group>";
