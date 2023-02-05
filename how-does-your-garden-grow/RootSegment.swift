@@ -33,7 +33,7 @@ struct RootSegment {
     
     mutating func addHue(hue: CGFloat) {
         self.hue = hue
-        let segments = self.segments
+
         var left = self.left
         left?.addHue(hue: hue)
         var right = self.right
@@ -42,6 +42,7 @@ struct RootSegment {
         up?.addHue(hue: hue)
         var down = self.down
         down?.addHue(hue: hue)
+
         self.segments = [
             left,
             right,

@@ -39,92 +39,30 @@ class DirtTileNode: SKShapeNode {
         } else if rootSegments.count < spriteNodes.count {
             for i in rootSegments.count..<spriteNodes.count {
                 spriteNodes[i].texture = nil
-                spriteNodes[i].color = .clear
+//                spriteNodes[i].color = .clear
             }
         }
 
         for (i, rootSegment) in rootSegments.enumerated() {
             let spriteNode = spriteNodes[i]
-            if !rootSegment.grown {
-                spriteNode.texture = nil
-                spriteNode.color = .clear
-                continue
-            }
+            spriteNode.alpha = rootSegment.grown ? 1.0 : 0.3
+//            if !rootSegment.grown {
+//                spriteNode.texture = nil
+//                spriteNode.color = .clear
+//                continue
+//            }
 //            let opacity = rootSegment.grown ? 1.0 : 0.3
             let leftGrown   = (rootSegment.left?.grown ?? false)  || (rootSegment.parentDirection == .left && rootSegment.grown)
             let rightGrown  = (rootSegment.right?.grown ?? false) || (rootSegment.parentDirection == .right && rootSegment.grown)
             let upGrown     = (rootSegment.up?.grown ?? false)    || (rootSegment.parentDirection == .up && rootSegment.grown)
             let downGrown   = (rootSegment.down?.grown ?? false)  || (rootSegment.parentDirection == .down && rootSegment.grown)
             
-            var texture: SKTexture?
-            if leftGrown && !rightGrown && !upGrown && !downGrown {
-                texture = SKTexture(imageNamed: "line_tip")
-                spriteNode.zRotation = .pi / 2
-            }
-            if !leftGrown && rightGrown && !upGrown && !downGrown {
-                texture = SKTexture(imageNamed: "line_tip")
-                spriteNode.zRotation = -.pi / 2
-            }
-            if !leftGrown && !rightGrown && upGrown && !downGrown {
-                texture = SKTexture(imageNamed: "line_tip")
-                spriteNode.zRotation = 0
-            }
-            if !leftGrown && !rightGrown && !upGrown && downGrown {
-                texture = SKTexture(imageNamed: "line_tip")
-                spriteNode.zRotation = .pi
+            var texture: SKTexture? = nil
+            if let (imageName, zRotation) = computeDrawParams(left: leftGrown, right: rightGrown, up: upGrown, down: downGrown) {
+                texture = SKTexture(imageNamed: imageName)
+                spriteNode.zRotation = zRotation
             }
 
-
-            if !leftGrown && !rightGrown && upGrown && downGrown {
-                texture = SKTexture(imageNamed: "line_straight")
-                spriteNode.zRotation = 0
-            }
-            if leftGrown && rightGrown && !upGrown && !downGrown {
-                texture = SKTexture(imageNamed: "line_straight")
-                spriteNode.zRotation = .pi / 2
-            }
-
-            
-            if !leftGrown && rightGrown && upGrown && !downGrown {
-                texture = SKTexture(imageNamed: "line_corner")
-                spriteNode.zRotation = 0
-            }
-            if !leftGrown && rightGrown && !upGrown && downGrown {
-                texture = SKTexture(imageNamed: "line_corner")
-                spriteNode.zRotation = -.pi / 2
-            }
-            if leftGrown && !rightGrown && !upGrown && downGrown {
-                texture = SKTexture(imageNamed: "line_corner")
-                spriteNode.zRotation = .pi
-            }
-            if leftGrown && !rightGrown && upGrown && !downGrown {
-                texture = SKTexture(imageNamed: "line_corner")
-                spriteNode.zRotation = .pi / 2
-            }
-
-            
-            if !leftGrown && rightGrown && upGrown && downGrown {
-                texture = SKTexture(imageNamed: "line_3_way")
-                spriteNode.zRotation = 0
-            }
-            if leftGrown && !rightGrown && upGrown && downGrown {
-                texture = SKTexture(imageNamed: "line_3_way")
-                spriteNode.zRotation = .pi
-            }
-            if leftGrown && rightGrown && !upGrown && downGrown {
-                texture = SKTexture(imageNamed: "line_3_way")
-                spriteNode.zRotation = -.pi / 2
-            }
-            if leftGrown && rightGrown && upGrown && !downGrown {
-                texture = SKTexture(imageNamed: "line_3_way")
-                spriteNode.zRotation = .pi / 2
-            }
-
-
-            if leftGrown && rightGrown && upGrown && downGrown {
-                texture = SKTexture(imageNamed: "line_4_way")
-                spriteNode.zRotation = 0
-            }
 //            spriteNode.color = UIColor(hue: rootSegment.hue, saturation: 0.5, brightness: 1, alpha: 1)
             spriteNodes[i].texture = texture
         }
@@ -139,5 +77,61 @@ class DirtTileNode: SKShapeNode {
         
         self.strokeColor = rootSegments.count > 1 ? .red : .brown.withAlphaComponent(0.3)
         // TODO: compute delta, add/remove textures for segments, animate frames
+    }
+    
+    func computeDrawParams(left: Bool, right: Bool, up: Bool, down: Bool) -> (String, CGFloat)? {
+        if left && !right && !up && !down {
+            return ("line_tip", .pi / 2)
+        }
+        if !left && right && !up && !down {
+            return ("line_tip", -.pi / 2)
+        }
+        if !left && !right && up && !down {
+            return ("line_tip", 0)
+        }
+        if !left && !right && !up && down {
+            return ("line_tip", .pi)
+        }
+
+
+        if !left && !right && up && down {
+            return ("line_straight", 0)
+        }
+        if left && right && !up && !down {
+            return ("line_straight", .pi / 2)
+        }
+
+        
+        if !left && right && up && !down {
+            return ("line_corner", 0)
+        }
+        if !left && right && !up && down {
+            return ("line_corner", -.pi / 2)
+        }
+        if left && !right && !up && down {
+            return ("line_corner", .pi)
+        }
+        if left && !right && up && !down {
+            return ("line_corner", .pi / 2)
+        }
+
+        
+        if !left && right && up && down {
+            return ("line_3_way", 0)
+        }
+        if left && !right && up && down {
+            return ("line_3_way", .pi)
+        }
+        if left && right && !up && down {
+            return ("line_3_way", -.pi / 2)
+        }
+        if left && right && up && !down {
+            return ("line_3_way", .pi / 2)
+        }
+
+        if left && right && up && down {
+            return ("line_4_way", 0)
+        }
+        return nil
     }
 }
