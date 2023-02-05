@@ -23,12 +23,13 @@ class PlotTile: SKEffectNode {
             self.plantImage = nil
         }
         if let plant {
-            let texture: SKTexture
+            var imageName = plant.species.rawValue
             if Double(plant.grownRootSegments) / Double(plant.rootSegments) > 0.5 {
-                texture = SKTexture(imageNamed: "\(plant.species.rawValue)_large")
+                imageName += "_large"
             } else {
-                texture = SKTexture(imageNamed: "\(plant.species.rawValue)_small")
+                imageName += "_small"
             }
+            let texture = SKTexture(imageNamed: imageName)
             self.plantImage = SKSpriteNode(texture: texture, size: self.size)
             self.plantImage?.position = CGPoint(x: self.size.width / 2, y: self.size.height / 2)
             addChild(self.plantImage!)
