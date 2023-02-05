@@ -52,8 +52,9 @@ struct Garden {
                 return true
             })
             if !plantGrew {
-                print("STUCK OUCH")
                 plant.stunted = true
+            } else if plant.stunted {
+                plant.stunted = false
             }
             self.plantPlots[i] = plant
          }
