@@ -25,7 +25,13 @@ enum Layer: CGFloat {
     case ui
 }
 
+protocol GameSceneDelegate {
+    func gameDidFinish(score: Int)
+}
+
 class GameScene: SKScene {
+    var gameSceneDelegate: GameSceneDelegate?
+    var level: Level = .spring()
     
     var tick = 0
     var score = 0
@@ -35,8 +41,6 @@ class GameScene: SKScene {
     var plotArray: PlotTileArrayNode!
     var player: PlayerNode!
     var scoreLabel: SKLabelNode!
-    
-    var currentLevel = Level.spring()
     
     var dirtInset: CGFloat = .zero
     var dirtHeight: CGFloat = .zero
@@ -95,7 +99,7 @@ class GameScene: SKScene {
         if tick % ticksPerPlant == 0 {
             let turn = tick / ticksPerPlant
             let turnDuration = Double(ticksPerPlant) * secondsPerTick
-            if let nextPlant = currentLevel.plantForTurn(turn: turn) {
+            if let nextPlant = level.plantForTurn(turn: turn) {
                 player.holdPlantSpecies(plantSpecies: nextPlant.species)
                 player.run(.sequence([
                     .moveTo(y: CGFloat(dirtHeight), duration: 0.85 * turnDuration),
@@ -106,6 +110,8 @@ class GameScene: SKScene {
                     }),
                     .moveTo(y: view!.frame.size.height, duration: 0.15 * turnDuration),
                 ]))
+            } else if !garden.plantPlots.contains(where: { plant in plant != nil }) {
+                gameSceneDelegate?.gameDidFinish(score: score)
             }
         }
         tick += 1
