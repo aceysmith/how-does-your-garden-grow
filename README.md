@@ -4,7 +4,7 @@
 
 * Add roots
 
-* ~~Change artwork to large image after ~50%~~
+* ~~Change artwork to large image after 50%~~
 
 * Add preview to plant during placement
 
