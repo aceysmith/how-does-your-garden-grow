@@ -37,6 +37,7 @@ class GameViewController: UIViewController, GameSceneDelegate {
         let scene = GameScene(size: skView.frame.size)
         scene.gameSceneDelegate = self
         scene.level = Level.levels[levelNumber]
+        scene.levelNumber = levelNumber
         scene.scaleMode = .aspectFill
         scene.view?.ignoresSiblingOrder = true
         skView.presentScene(scene)

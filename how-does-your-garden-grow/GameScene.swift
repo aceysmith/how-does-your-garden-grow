@@ -32,6 +32,7 @@ protocol GameSceneDelegate {
 class GameScene: SKScene {
     var gameSceneDelegate: GameSceneDelegate?
     var level: Level = .spring()
+    var levelNumber = 0
     
     var tick = 0
     var score = 0
@@ -41,6 +42,7 @@ class GameScene: SKScene {
     var dirtGrid: DirtTileGridNode!
     var plotArray: PlotTileArrayNode!
     var player: PlayerNode!
+    var levelLabel: SKLabelNode!
     var scoreLabel: SKLabelNode!
     
     var dirtInset: CGFloat = .zero
@@ -75,10 +77,21 @@ class GameScene: SKScene {
         background.zPosition = -1000
         addChild(background)
 
-        scoreLabel = SKLabelNode(text: "Score \(score)")
-        scoreLabel.position = CGPoint(x: view.frame.maxX - 100, y: view.frame.maxY - 50)
+        let viewTop = convertPoint(fromView: CGPoint(x: 0.0, y: view.bounds.size.height)).y
+        
+        scoreLabel = SKLabelNode(text: "Score: \(score)")
+        scoreLabel.horizontalAlignmentMode = .right
+        scoreLabel.verticalAlignmentMode = .center
+        scoreLabel.position = CGPoint(x: frame.maxX - 50, y: frame.maxY - 50)
         scoreLabel.zPosition = Layer.ui.rawValue
         addChild(scoreLabel)
+        
+        levelLabel = SKLabelNode(text: "Level: \(levelNumber+1) of \(Level.levels.count)")
+        levelLabel.horizontalAlignmentMode = .left
+        levelLabel.verticalAlignmentMode = .center
+        levelLabel.position = CGPoint(x: frame.minX + 50, y: frame.maxY - 50)
+        levelLabel.zPosition = Layer.ui.rawValue
+        addChild(levelLabel)
         
         update()
 
