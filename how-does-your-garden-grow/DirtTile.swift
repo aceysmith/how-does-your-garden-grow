@@ -7,12 +7,21 @@
 
 import SpriteKit
 
+let lineWidth = 2
+
 class DirtTile: SKShapeNode {
     var lastSegments: [RootSegment] = []
     init(size: CGSize) {
         super.init()
-        self.path = CGPath(rect: CGRect(origin: .zero, size: size), transform: nil)
+        self.path = CGPath(
+            rect: CGRect(
+                origin: CGPoint(x: lineWidth / 2, y: lineWidth / 2),
+                size: CGSize(width: size.width - lineWidth, height: size.height - lineWidth)
+            ),
+            transform: nil
+        )
         self.strokeColor = .brown.withAlphaComponent(0.3)
+        self.lineWidth = 2
     }
     required init?(coder aDecoder: NSCoder) { return nil }
 
@@ -24,6 +33,8 @@ class DirtTile: SKShapeNode {
             }
         }
         self.fillColor = color
+        
+        self.strokeColor = rootSegments.count > 1 ? .red : .brown.withAlphaComponent(0.3)
         // TODO: compute delta, add/remove textures for segments, animate frames
     }
 }

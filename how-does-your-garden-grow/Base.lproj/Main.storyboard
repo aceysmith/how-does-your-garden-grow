@@ -17,9 +17,12 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="RLs-z3-r7J">
-                                <rect key="frame" x="644" y="39" width="79" height="35"/>
+                                <rect key="frame" x="20" y="44" width="79" height="35"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="35" id="VTs-Bg-h6S"/>
+                                </constraints>
                                 <state key="normal" title="Button"/>
-                                <buttonConfiguration key="configuration" style="gray" title="Restart"/>
+                                <buttonConfiguration key="configuration" style="filled" title="Restart"/>
                                 <connections>
                                     <action selector="restart:" destination="BV1-FR-VrT" eventType="touchUpInside" id="plC-tb-8rx"/>
                                 </connections>
@@ -28,8 +31,9 @@
                         <viewLayoutGuide key="safeArea" id="4qk-I5-YsI"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
-                            <constraint firstItem="RLs-z3-r7J" firstAttribute="centerX" secondItem="4qk-I5-YsI" secondAttribute="centerX" id="670-Jf-fgZ"/>
-                            <constraint firstItem="RLs-z3-r7J" firstAttribute="top" secondItem="4qk-I5-YsI" secondAttribute="top" constant="15" id="iuq-pf-g0P"/>
+                            <constraint firstItem="RLs-z3-r7J" firstAttribute="leading" secondItem="4qk-I5-YsI" secondAttribute="leading" constant="20" id="2c7-in-J3w"/>
+                            <constraint firstItem="4qk-I5-YsI" firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="RLs-z3-r7J" secondAttribute="trailing" constant="20" id="NXQ-Cd-flc"/>
+                            <constraint firstItem="RLs-z3-r7J" firstAttribute="top" secondItem="4qk-I5-YsI" secondAttribute="top" constant="20" id="iuq-pf-g0P"/>
                         </constraints>
                     </view>
                 </viewController>
