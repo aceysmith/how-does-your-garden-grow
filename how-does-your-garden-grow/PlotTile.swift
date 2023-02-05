@@ -23,6 +23,7 @@ class PlotTile: SKEffectNode {
         
         harvestParticle = SKEmitterNode(fileNamed: "Harvest")
         harvestParticle.isPaused = true
+        harvestParticle.isHidden = true
         harvestParticle.position = CGPoint(x: size.width / 2, y: size.width / 2)
         harvestParticle.zPosition = Layer.glow.rawValue
         addChild(harvestParticle)
@@ -46,8 +47,10 @@ class PlotTile: SKEffectNode {
             }
             plantImage.texture = SKTexture(imageNamed: imageName)
             harvestParticle.isPaused = growthPercentage < 100
+            harvestParticle.isHidden = growthPercentage < 100
         } else {
             harvestParticle.isPaused = true
+            harvestParticle.isHidden = true
             plantImage.texture = nil
             lastPlant = nil
         }

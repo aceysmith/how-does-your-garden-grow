@@ -152,7 +152,7 @@ class GameScene: SKScene {
         let touchedAPlot = scene?.nodes(at: touchLocation).contains(where: { node in
             return node is PlotTile
         }) ?? false
-        if touchedAPlot {
+        if touchedAPlot && garden.plantPlots[position] != nil {
             if let plant = garden.plantPlots[position], plant.grownRootSegments == plant.rootSegments {
                 harvestPlant(position: position)
             } else {
