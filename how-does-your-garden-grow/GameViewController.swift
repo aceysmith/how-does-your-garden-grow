@@ -18,8 +18,6 @@ class GameViewController: UIViewController {
             let scene = GameScene(size: view.frame.size)
             scene.scaleMode = .aspectFill
             view.presentScene(scene)
-            
-            view.ignoresSiblingOrder = true
 //#if DEBUG
 //            view.showsFPS = true
 //            view.showsNodeCount = true

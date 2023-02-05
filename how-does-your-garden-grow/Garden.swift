@@ -30,15 +30,32 @@ struct Garden {
     
     mutating func grow() {
         let sortedPlantsByGrown = plantPlots.enumerated().sorted(by: {
-            $0.element?.grownRootSegments.count ?? 0 > $1.element?.grownRootSegments.count ?? 0
+            $0.element?.grownRootSegments ?? 0 > $1.element?.grownRootSegments ?? 0
         })
-        for (i, plant) in sortedPlantsByGrown {
-            if var plant {
-                _ = plant.grow(canGrow: { position in
-                    return false
-                })
-                self.plantPlots[i] = plant
+        var plotFilled = [Bool](repeating: false, count: horizonalTileCount * verticalTileCount)
+        for (i, plant) in plantPlots.enumerated() {
+            guard let plant else { continue }
+            for (rootSegment, relativePosition) in plant.segmentPositions {
+                guard rootSegment.grown == true else { continue }
+                plotFilled[relativePosition.y * horizonalTileCount + relativePosition.x + i] = true
             }
+        }
+        for (i, plant) in sortedPlantsByGrown {
+            guard var plant, plant.grownRootSegments < plant.rootSegments else { continue }
+            let plantGrew = plant.grow(position: i, canGrow: { position in
+                if position.x < 0 || position.x >= horizonalTileCount || position.y < 0 || position.y >= verticalTileCount {
+                    return false
+                }
+                if plotFilled[position.y * horizonalTileCount + position.x] {
+                    return false
+                }
+                return true
+            })
+            if !plantGrew {
+                print("STUCK OUCH")
+                plant.stunted = true
+            }
+            self.plantPlots[i] = plant
          }
     }
 }

@@ -32,8 +32,11 @@ class DirtTileGrid: SKNode {
     }
     required init?(coder aDecoder: NSCoder) { return nil }
 
-    subscript(row: Int, column: Int) -> DirtTile {
+    subscript(row: Int, column: Int) -> DirtTile? {
         get {
+            if row < 0 || row >= verticalTileCount || column < 0 || column >= horizonalTileCount {
+                return nil
+            }
             return dirtTiles[row * horizonalTileCount + column]
         }
     }
@@ -42,7 +45,7 @@ class DirtTileGrid: SKNode {
         for (index, plant) in plants.enumerated() {
             guard let plant else { continue }
             for (rootSegment, position) in plant.segmentPositions {
-                let dirtTile = self[position.y, position.x + index]
+                guard let dirtTile = self[position.y, position.x + index] else { continue }
                 dirtTile.displayRootSegments(rootSegments: [rootSegment])
             }
         }

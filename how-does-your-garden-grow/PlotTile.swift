@@ -7,7 +7,7 @@
 
 import SpriteKit
 
-class PlotTile: SKShapeNode {
+class PlotTile: SKEffectNode {
     private var lastSegments: [RootSegment] = []
     private var plantImage: SKSpriteNode?
     private var size: CGSize

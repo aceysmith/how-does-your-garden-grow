@@ -28,11 +28,11 @@ struct RootSegment {
         self.segments = [left, right, up, down]
     }
     
-    var grownSubSegments: [RootSegment] {
+    var grownSubSegments: Int {
         if !grown {
-            return []
+            return 0
         }
-        var totalSegments = [self]
+        var totalSegments = 1
         for segment in self.segments {
             guard let segment else { continue }
             totalSegments += segment.grownSubSegments
@@ -41,8 +41,8 @@ struct RootSegment {
     }
     
     // A segment is a sub-segment of itself
-    var subSegments: [RootSegment] {
-        var segments = [self]
+    var subSegments: Int {
+        var segments = 1
         for segment in self.segments {
             guard let segment else { continue }
             segments += segment.subSegments
@@ -56,29 +56,29 @@ struct RootSegment {
         for (index, segment) in self.segments.enumerated() {
             guard let segment else { continue }
             segmentPositions += segment.computeSegmentPositions(
-                plantRelativePosition: plantRelativePosition.relativePosition(moving: Direction(rawValue: index)!)
+                plantRelativePosition: plantRelativePosition.moved(Direction(rawValue: index)!)
             )
         }
         return segmentPositions
     }
     
-    // Grow next segment
-    // TODO: This is ugly as hell, refactor now and/or after jam
     mutating func grow(position: PlantRelativePosition, canGrow: (PlantRelativePosition) -> Bool) -> Bool {
-        // TODO: only set to true if target tile is unoccupied
         if !grown {
-            grown = true
-            return true
+            if canGrow(position) {
+                grown = true
+                return true
+            } else {
+                return false
+            }
         } else {
             for (i, segment) in segments.enumerated().shuffled() {
-                if var segment {
-                    let nextPosition = position.relativePosition(moving: Direction(rawValue: i)!)
-//                    if !canGrow(nextPosition) { continue }
-                    let didGrow = segment.grow(position: nextPosition, canGrow: canGrow)
-                    if didGrow {
-                        self.segments[i] = segment
-                        return true
-                    }
+                guard var segment else { continue }
+
+                let nextPosition = position.moved(Direction(rawValue: i)!)
+                let didGrow = segment.grow(position: nextPosition, canGrow: canGrow)
+                if didGrow {
+                    self.segments[i] = segment
+                    return true
                 }
             }
             return false

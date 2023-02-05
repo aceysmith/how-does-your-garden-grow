@@ -27,8 +27,8 @@ garden.grow()
 
 for (i, plant) in garden.plantPlots.enumerated() {
     if let plant {
-        print("plant \(i) segments count: \(plant.rootSegments.count)")
-        print("plant \(i) grown segments count: \(plant.grownRootSegments.count)")
-        print("plant \(i) grown segments: \(plant.grownRootSegments)")
+        print("plant \(i) segments count: \(plant.rootSegments)")
+        print("plant \(i) grown segments count: \(plant.grownRootSegments)")
+//        print("plant \(i) grown segments: \(plant.grownRootSegments)")
     }
 }

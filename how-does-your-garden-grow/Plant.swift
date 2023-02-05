@@ -26,7 +26,7 @@ enum Direction: Int {
 struct PlantRelativePosition {
     let x: Int
     let y: Int
-    func relativePosition(moving direction:Direction) -> PlantRelativePosition {
+    func moved(_ direction:Direction) -> PlantRelativePosition {
         var nextPosition: PlantRelativePosition
         switch (direction) {
         case .up:
@@ -51,10 +51,11 @@ struct Plant {
     let species: PlantSpecies
     let award: Int
     let tint: SKColor
-    var rootSegments: [RootSegment] {
+    var stunted = false
+    var rootSegments: Int {
         return root.subSegments
     }
-    var grownRootSegments: [RootSegment] {
+    var grownRootSegments: Int {
         return root.grownSubSegments
     }
     init(species: PlantSpecies, root: RootSegment, award: Int, tint: SKColor) {
@@ -68,8 +69,8 @@ struct Plant {
         return root.computeSegmentPositions(plantRelativePosition: PlantRelativePosition(x: 0, y: 0))
     }
 
-    mutating func grow(canGrow: (PlantRelativePosition) -> Bool) -> Bool {
-        return root.grow(position: PlantRelativePosition(x: 0, y: 0), canGrow: canGrow)
+    mutating func grow(position: Int, canGrow: (PlantRelativePosition) -> Bool) -> Bool {
+        return root.grow(position: PlantRelativePosition(x: position, y: 0), canGrow: canGrow)
     }
 }
 

@@ -45,7 +45,6 @@ class GameScene: SKScene {
         player = Player(size: CGSize(width: 100, height: 500), plantSize: plantSize)
         player.anchorPoint = CGPoint(x: 0.5, y: 0)
         player.position = CGPoint(x: xPosForPosition(position: playerPosition), y: view.frame.height)
-//        player.zPosition = 1000
         addChild(player)
                 
         plotArray = PlotTileArray(tileSize: plantSize, tileCount: horizontalTileCount)
@@ -84,13 +83,14 @@ class GameScene: SKScene {
             if let nextPlant = currentLevel.plantForTurn(turn: turn) {
                 player.holdPlantSpecies(plantSpecies: nextPlant.species)
                 player.run(.sequence([
-                    .moveTo(y: CGFloat(dirtHeight), duration: 0.8 * turnDuration),
+                    .moveTo(y: CGFloat(dirtHeight), duration: 0.85 * turnDuration),
                     .run({ [self] in
                         garden.addPlant(position: playerPosition, plant: nextPlant)
                         player.holdPlantSpecies(plantSpecies: nil)
                         plotArray.displayPlants(plants: garden.plantPlots)
+                        dirtGrid.displayPlants(plants: garden.plantPlots)
                     }),
-                    .moveTo(y: view!.frame.size.height, duration: 0.2 * turnDuration),
+                    .moveTo(y: view!.frame.size.height, duration: 0.15 * turnDuration),
                 ]))
             }
         }
@@ -133,7 +133,7 @@ class GameScene: SKScene {
             return node is PlotTile
         }) ?? false
         if touchedAPlot {
-            if let plant = garden.plantPlots[position], plant.grownRootSegments.count == plant.rootSegments.count {
+            if var plant = garden.plantPlots[position], plant.grownRootSegments == plant.rootSegments {
                 harvestPlant(position: position)
             } else {
                 cutPlant(position: position)
