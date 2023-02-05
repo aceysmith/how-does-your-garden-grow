@@ -14,10 +14,14 @@ let horizontalTileCount = 17
 let verticleTileCount = 7
 
 enum Layer: CGFloat {
-    case background = -100
-    case dirt = -20
-    case sky = -10
-    case player = 10
+    case sky
+    case dirt
+    case dirtPreview
+    case dirtRoot
+    case player
+    case hand
+    case plants
+    case ui
 }
 
 class GameScene: SKScene {
@@ -46,6 +50,7 @@ class GameScene: SKScene {
         player = Player(size: CGSize(width: 100, height: 500), plantSize: plantSize)
         player.anchorPoint = CGPoint(x: 0.5, y: 0)
         player.position = CGPoint(x: xPosForPosition(position: playerPosition), y: view.frame.height)
+        player.zPosition = Layer.player.rawValue
         addChild(player)
                 
         plotArray = PlotTileArray(tileSize: plantSize, tileCount: horizontalTileCount)
@@ -66,6 +71,7 @@ class GameScene: SKScene {
 
         scoreLabel = SKLabelNode(text: "Score \(score)")
         scoreLabel.position = CGPoint(x: view.frame.maxX - 100, y: view.frame.maxY - 50)
+        scoreLabel.zPosition = Layer.ui.rawValue
         addChild(scoreLabel)
         
         update()

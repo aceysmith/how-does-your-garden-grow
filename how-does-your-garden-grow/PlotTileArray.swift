@@ -25,6 +25,7 @@ class PlotTileArray: SKNode {
                 x: (index % tileCount) * Int(tileSize.width),
                 y: 0
             )
+            tile.zPosition = Layer.plants.rawValue
             addChild(tile)
         }
     }

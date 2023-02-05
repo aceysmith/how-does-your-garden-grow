@@ -12,7 +12,8 @@ class Background: SKNode {
         super.init()
         
         let dirt = SKSpriteNode(imageNamed: "dirt")
-        dirt.anchorPoint = .zero
+        dirt.anchorPoint = CGPoint(x: 0, y: 1.0)
+        dirt.position = CGPoint(x: 0, y: dirtHeight)
         dirt.zPosition = Layer.dirt.rawValue
         addChild(dirt)
 

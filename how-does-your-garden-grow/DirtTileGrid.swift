@@ -27,6 +27,7 @@ class DirtTileGrid: SKNode {
                 x: (index % horizonalTileCount) * tileWidth,
                 y: (verticalTileCount - (index / horizonalTileCount) - 1) * tileWidth
             )
+            tile.zPosition = Layer.dirtPreview.rawValue
             addChild(tile)
         }
     }

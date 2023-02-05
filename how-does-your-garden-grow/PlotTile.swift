@@ -30,9 +30,10 @@ class PlotTile: SKEffectNode {
                 imageName += "_small"
             }
             let texture = SKTexture(imageNamed: imageName)
-            self.plantImage = SKSpriteNode(texture: texture, size: self.size)
-            self.plantImage?.position = CGPoint(x: self.size.width / 2, y: self.size.height / 2)
-            addChild(self.plantImage!)
+            plantImage = SKSpriteNode(texture: texture, size: size)
+            plantImage?.position = CGPoint(x: size.width / 2, y: size.height / 2)
+            plantImage?.zPosition = Layer.plants.rawValue
+            addChild(plantImage!)
         }
         // TODO: compute delta, add/remove textures for segments, animate frames
     }
