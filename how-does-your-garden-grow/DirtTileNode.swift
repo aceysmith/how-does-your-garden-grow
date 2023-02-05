@@ -9,7 +9,7 @@ import SpriteKit
 
 let lineWidth = 2
 
-class DirtTile: SKShapeNode {
+class DirtTileNode: SKShapeNode {
     var lastSegments: [RootSegment] = []
     init(size: CGSize) {
         super.init()

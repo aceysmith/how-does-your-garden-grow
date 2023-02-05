@@ -7,18 +7,18 @@
 
 import SpriteKit
 
-class DirtTileGrid: SKNode {
+class DirtTileGridNode: SKNode {
     private let horizonalTileCount: Int
     private let verticalTileCount: Int
 
-    private let dirtTiles: [DirtTile]
+    private let dirtTiles: [DirtTileNode]
     
     public init(tileWidth: Int, horizonalTileCount: Int, verticalTileCount: Int) {
         self.horizonalTileCount = horizonalTileCount
         self.verticalTileCount = verticalTileCount
-        var dirtTiles = [DirtTile]()
+        var dirtTiles = [DirtTileNode]()
         for _ in 0..<verticalTileCount * horizonalTileCount {
-            dirtTiles.append(DirtTile(size: CGSize(width: tileWidth, height: tileWidth)))
+            dirtTiles.append(DirtTileNode(size: CGSize(width: tileWidth, height: tileWidth)))
         }
         self.dirtTiles = dirtTiles
         super.init()
@@ -33,7 +33,7 @@ class DirtTileGrid: SKNode {
     }
     required init?(coder aDecoder: NSCoder) { return nil }
 
-    subscript(row: Int, column: Int) -> DirtTile? {
+    subscript(row: Int, column: Int) -> DirtTileNode? {
         get {
             if row < 0 || row >= verticalTileCount || column < 0 || column >= horizonalTileCount {
                 return nil

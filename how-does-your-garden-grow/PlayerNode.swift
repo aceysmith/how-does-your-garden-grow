@@ -7,7 +7,7 @@
 
 import SpriteKit
 
-class Player: SKSpriteNode {
+class PlayerNode: SKSpriteNode {
     var hand: SKSpriteNode!
     var plantSize: CGSize
     public init(size: CGSize, plantSize: CGSize) {

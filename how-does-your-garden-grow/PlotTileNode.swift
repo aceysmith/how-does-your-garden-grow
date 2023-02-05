@@ -7,7 +7,7 @@
 
 import SpriteKit
 
-class PlotTile: SKEffectNode {
+class PlotTileNode: SKEffectNode {
     private var lastSegments: [RootSegment] = []
     private var plantImage: SKSpriteNode!
     private var harvestParticle: SKEmitterNode!
@@ -32,10 +32,6 @@ class PlotTile: SKEffectNode {
     required init?(coder aDecoder: NSCoder) { return nil }
 
     func displayPlant(plant: Plant?) {
-        // Assuming you can't display a plant while you already are displaying one
-//        if plant != nil && lastPlant != nil {
-//            return
-//        }
         if let plant {
             lastPlant = plant
             var imageName = plant.species.rawValue

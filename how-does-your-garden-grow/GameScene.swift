@@ -31,9 +31,9 @@ class GameScene: SKScene {
     var score = 0
     var playerPosition = 8
     var garden = Garden(horizonalTileCount: horizontalTileCount, verticalTileCount: verticleTileCount)
-    var dirtGrid: DirtTileGrid!
-    var plotArray: PlotTileArray!
-    var player: Player!
+    var dirtGrid: DirtTileGridNode!
+    var plotArray: PlotTileArrayNode!
+    var player: PlayerNode!
     var scoreLabel: SKLabelNode!
     
     var currentLevel = Level.spring()
@@ -48,17 +48,17 @@ class GameScene: SKScene {
         dirtHeight = CGFloat(verticleTileCount) * tileWidth
         let plantSize = CGSize(width: tileWidth, height: 2 * tileWidth)
 
-        player = Player(size: CGSize(width: 100, height: 500), plantSize: plantSize)
+        player = PlayerNode(size: CGSize(width: 100, height: 500), plantSize: plantSize)
         player.anchorPoint = CGPoint(x: 0.5, y: 0)
         player.position = CGPoint(x: xPosForPosition(position: playerPosition), y: view.frame.height)
         player.zPosition = Layer.player.rawValue
         addChild(player)
                 
-        plotArray = PlotTileArray(tileSize: plantSize, tileCount: horizontalTileCount)
+        plotArray = PlotTileArrayNode(tileSize: plantSize, tileCount: horizontalTileCount)
         plotArray.position = CGPoint(x: (view.frame.width - (CGFloat(horizontalTileCount) * tileWidth)) / 2, y: CGFloat(dirtHeight))
         addChild(plotArray)
         
-        dirtGrid = DirtTileGrid(
+        dirtGrid = DirtTileGridNode(
             tileWidth: Int(tileWidth),
             horizonalTileCount: horizontalTileCount,
             verticalTileCount: verticleTileCount
@@ -66,7 +66,7 @@ class GameScene: SKScene {
         dirtGrid.position = CGPoint(x: (view.frame.width - (CGFloat(horizontalTileCount) * tileWidth)) / 2, y: 0)
         addChild(dirtGrid)
         
-        let background = Background(size: view.frame.size, dirtHeight: Int(dirtHeight))
+        let background = BackgroundNode(size: view.frame.size, dirtHeight: Int(dirtHeight))
         background.zPosition = -1000
         addChild(background)
 
@@ -150,7 +150,7 @@ class GameScene: SKScene {
         let position = positionForXPos(xPos: touchLocation.x)
         
         let touchedAPlot = scene?.nodes(at: touchLocation).contains(where: { node in
-            return node is PlotTile
+            return node is PlotTileNode
         }) ?? false
         if touchedAPlot && garden.plantPlots[position] != nil {
             if let plant = garden.plantPlots[position], plant.grownRootSegments == plant.rootSegments {

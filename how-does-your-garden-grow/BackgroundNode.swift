@@ -7,7 +7,7 @@
 
 import SpriteKit
 
-class Background: SKNode {
+class BackgroundNode: SKNode {
     init(size: CGSize, dirtHeight: Int) {
         super.init()
         

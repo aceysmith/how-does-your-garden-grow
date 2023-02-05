@@ -7,16 +7,16 @@
 
 import SpriteKit
 
-class PlotTileArray: SKNode {
+class PlotTileArrayNode: SKNode {
     private let tileCount: Int
     
-    private let plotTiles: [PlotTile]
+    private let plotTiles: [PlotTileNode]
     
     public init(tileSize: CGSize, tileCount: Int) {
         self.tileCount = tileCount
-        var plotTiles = [PlotTile]()
+        var plotTiles = [PlotTileNode]()
         for _ in 0..<tileCount {
-            plotTiles.append(PlotTile(size: tileSize))
+            plotTiles.append(PlotTileNode(size: tileSize))
         }
         self.plotTiles = plotTiles
         super.init()
@@ -31,7 +31,7 @@ class PlotTileArray: SKNode {
     }
     required init?(coder aDecoder: NSCoder) { return nil }
     
-    subscript(column: Int) -> PlotTile {
+    subscript(column: Int) -> PlotTileNode {
         get {
             return plotTiles[column]
         }
