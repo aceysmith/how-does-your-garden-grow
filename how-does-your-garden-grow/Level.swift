@@ -18,13 +18,14 @@ struct Level {
 extension Level {
     static func spring() -> Level {
         return Level(plants: [
-            .tallBoy(),
-            .tallBoy(),
-            .fighterJet(),
-            .tallBoy(),
-            .tallBoy(),
-            .fighterJet(),
-            .tallBoy()
+            .herb(),
+            .carrot(),
+            .cabbage(),
+            .chard(),
+            .mustard(),
+            .tomato(),
+            .carrot(),
+            .mustard(),
         ])
     }
     static func summer() -> Level {
