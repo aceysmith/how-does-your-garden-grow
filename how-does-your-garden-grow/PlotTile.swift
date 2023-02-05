@@ -24,7 +24,8 @@ class PlotTile: SKEffectNode {
         }
         if let plant {
             var imageName = plant.species.rawValue
-            if Double(plant.grownRootSegments) / Double(plant.rootSegments) > 0.5 {
+            let growthPercentage = (Double(plant.grownRootSegments) / Double(plant.rootSegments)) * 100
+            if  growthPercentage > 50 {
                 imageName += "_large"
             } else {
                 imageName += "_small"
@@ -34,6 +35,15 @@ class PlotTile: SKEffectNode {
             plantImage?.position = CGPoint(x: size.width / 2, y: size.height / 2)
             plantImage?.zPosition = Layer.plants.rawValue
             addChild(plantImage!)
+            
+            if growthPercentage == 100 {
+                if let harvestParticle = SKEmitterNode(fileNamed: "Harvest") {
+                    harvestParticle.position = CGPointMake(0, -plantImage!.size.height / 2)
+                    // TODO: this doesn't position behind anything but the plant :(
+                    harvestParticle.zPosition = Layer.glow.rawValue
+                    plantImage?.addChild(harvestParticle)
+                }
+            }
         }
         // TODO: compute delta, add/remove textures for segments, animate frames
     }

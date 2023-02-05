@@ -15,6 +15,7 @@ let verticleTileCount = 7
 
 enum Layer: CGFloat {
     case sky
+    case glow
     case dirt
     case dirtPreview
     case dirtRoot

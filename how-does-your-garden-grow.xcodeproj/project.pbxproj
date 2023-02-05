@@ -24,6 +24,8 @@
 		5C929941298F04C9009C5C68 /* Media.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5C929940298F04C9009C5C68 /* Media.xcassets */; };
 		5C929966298F1CF7009C5C68 /* App.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5C929965298F1CF7009C5C68 /* App.xcassets */; };
 		5C929968298F3D02009C5C68 /* Level.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C929967298F3D02009C5C68 /* Level.swift */; };
+		D9C396A72990275A00076417 /* Harvest.sks in Resources */ = {isa = PBXBuildFile; fileRef = D9C396A52990275A00076417 /* Harvest.sks */; };
+		D9C396A82990275B00076417 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D9C396A62990275A00076417 /* Assets.xcassets */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -47,6 +49,8 @@
 		5C929965298F1CF7009C5C68 /* App.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = App.xcassets; sourceTree = "<group>"; };
 		5C929967298F3D02009C5C68 /* Level.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Level.swift; sourceTree = "<group>"; };
 		5C929969298F480F009C5C68 /* MyPlayground.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = MyPlayground.playground; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
+		D9C396A52990275A00076417 /* Harvest.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = Harvest.sks; sourceTree = "<group>"; };
+		D9C396A62990275A00076417 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -92,6 +96,8 @@
 				5C92993B298F02F3009C5C68 /* Plant.swift */,
 				5C6DD549298F846200396E64 /* Player.swift */,
 				5C929935298EF30B009C5C68 /* PlotTile.swift */,
+				D9C396A52990275A00076417 /* Harvest.sks */,
+				D9C396A62990275A00076417 /* Assets.xcassets */,
 				5C929933298EF2AD009C5C68 /* PlotTileArray.swift */,
 				5C92993A298F02F3009C5C68 /* RootSegment.swift */,
 				5C929965298F1CF7009C5C68 /* App.xcassets */,
@@ -162,7 +168,9 @@
 			files = (
 				5C929941298F04C9009C5C68 /* Media.xcassets in Resources */,
 				5C929966298F1CF7009C5C68 /* App.xcassets in Resources */,
+				D9C396A72990275A00076417 /* Harvest.sks in Resources */,
 				5C11AAB7298DFD1C00B48071 /* Main.storyboard in Resources */,
+				D9C396A82990275B00076417 /* Assets.xcassets in Resources */,
 				5C11AABC298DFD1D00B48071 /* LaunchScreen.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
