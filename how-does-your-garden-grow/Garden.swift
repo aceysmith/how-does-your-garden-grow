@@ -25,13 +25,19 @@ struct Garden {
     }
     
     mutating func grow() {
-        // TODO: Do the logic to update all of the plants' segments' grown properties
-        for plantIndex in 0..<horizonalTileCount {
-            if var plant = plantPlots[plantIndex], plant.root.grown == false {
-                plant.root.grown = true
-                addPlant(position: plantIndex, plant: plant)
-                plantPlots[plantIndex] = plant
+        let sortedPlantsByGrown = plantPlots.enumerated().sorted(by: {$0.element?.grownRootSegments.count ?? 0 > $1.element?.grownRootSegments.count ?? 0})
+        for (i, plant) in sortedPlantsByGrown {
+            if var plant {
+                plant.grow()
+                self.plantPlots[i] = plant
             }
         }
+//        for plantIndex in 0..<horizonalTileCount {
+//            if var plant = plantPlots[plantIndex], plant.root.grown == false {
+//                plant.root.grown = true
+//                addPlant(position: plantIndex, plant: plant)
+//                plantPlots[plantIndex] = plant
+//            }
+//        }
     }
 }

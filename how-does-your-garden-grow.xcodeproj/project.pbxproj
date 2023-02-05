@@ -12,13 +12,13 @@
 		5C11AAB4298DFD1C00B48071 /* GameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C11AAB3298DFD1C00B48071 /* GameViewController.swift */; };
 		5C11AAB7298DFD1C00B48071 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5C11AAB5298DFD1C00B48071 /* Main.storyboard */; };
 		5C11AABC298DFD1D00B48071 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5C11AABA298DFD1D00B48071 /* LaunchScreen.storyboard */; };
-		5C929903298E0719009C5C68 /* Plant.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C929902298E0719009C5C68 /* Plant.swift */; };
 		5C929905298E12B8009C5C68 /* bigRoot.png in Resources */ = {isa = PBXBuildFile; fileRef = 5C929904298E12B8009C5C68 /* bigRoot.png */; };
-		5C929907298E2B68009C5C68 /* Garden.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C929906298E2B68009C5C68 /* Garden.swift */; };
-		5C929909298E2B71009C5C68 /* RootSegment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C929908298E2B71009C5C68 /* RootSegment.swift */; };
 		5C92992E298E5091009C5C68 /* DirtTile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C92992D298E5091009C5C68 /* DirtTile.swift */; };
 		5C929930298E5105009C5C68 /* DirtGrid.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C92992F298E5105009C5C68 /* DirtGrid.swift */; };
 		5C929932298ED654009C5C68 /* Background.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C929931298ED654009C5C68 /* Background.swift */; };
+		D9AB9B49298F02780078DB8A /* Garden.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9AB9B48298F02780078DB8A /* Garden.swift */; };
+		D9AB9B4A298F02780078DB8A /* RootSegment.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9AB9B46298F02780078DB8A /* RootSegment.swift */; };
+		D9AB9B4B298F02780078DB8A /* Plant.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9AB9B47298F02780078DB8A /* Plant.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -29,13 +29,14 @@
 		5C11AAB6298DFD1C00B48071 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		5C11AABB298DFD1D00B48071 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		5C929901298E01A6009C5C68 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = SOURCE_ROOT; };
-		5C929902298E0719009C5C68 /* Plant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Plant.swift; sourceTree = "<group>"; };
 		5C929904298E12B8009C5C68 /* bigRoot.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bigRoot.png; sourceTree = "<group>"; };
-		5C929906298E2B68009C5C68 /* Garden.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Garden.swift; sourceTree = "<group>"; };
-		5C929908298E2B71009C5C68 /* RootSegment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootSegment.swift; sourceTree = "<group>"; };
 		5C92992D298E5091009C5C68 /* DirtTile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DirtTile.swift; sourceTree = "<group>"; };
 		5C92992F298E5105009C5C68 /* DirtGrid.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DirtGrid.swift; sourceTree = "<group>"; };
 		5C929931298ED654009C5C68 /* Background.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Background.swift; sourceTree = "<group>"; };
+		D9AB9B45298F01DA0078DB8A /* MyPlayground.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = MyPlayground.playground; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
+		D9AB9B46298F02780078DB8A /* RootSegment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootSegment.swift; sourceTree = "<group>"; };
+		D9AB9B47298F02780078DB8A /* Plant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Plant.swift; sourceTree = "<group>"; };
+		D9AB9B48298F02780078DB8A /* Garden.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Garden.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -70,15 +71,16 @@
 			children = (
 				5C929901298E01A6009C5C68 /* README.md */,
 				5C929904298E12B8009C5C68 /* bigRoot.png */,
+				D9AB9B48298F02780078DB8A /* Garden.swift */,
+				D9AB9B47298F02780078DB8A /* Plant.swift */,
+				D9AB9B46298F02780078DB8A /* RootSegment.swift */,
 				5C11AAAB298DFD1C00B48071 /* AppDelegate.swift */,
 				5C11AAB1298DFD1C00B48071 /* GameScene.swift */,
 				5C929931298ED654009C5C68 /* Background.swift */,
 				5C92992F298E5105009C5C68 /* DirtGrid.swift */,
 				5C92992D298E5091009C5C68 /* DirtTile.swift */,
 				5C11AAB3298DFD1C00B48071 /* GameViewController.swift */,
-				5C929906298E2B68009C5C68 /* Garden.swift */,
-				5C929902298E0719009C5C68 /* Plant.swift */,
-				5C929908298E2B71009C5C68 /* RootSegment.swift */,
+				D9AB9B45298F01DA0078DB8A /* MyPlayground.playground */,
 				5C11AABA298DFD1D00B48071 /* LaunchScreen.storyboard */,
 				5C11AAB5298DFD1C00B48071 /* Main.storyboard */,
 			);
@@ -156,11 +158,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5C929907298E2B68009C5C68 /* Garden.swift in Sources */,
+				D9AB9B49298F02780078DB8A /* Garden.swift in Sources */,
+				D9AB9B4B298F02780078DB8A /* Plant.swift in Sources */,
 				5C11AAB2298DFD1C00B48071 /* GameScene.swift in Sources */,
 				5C929930298E5105009C5C68 /* DirtGrid.swift in Sources */,
-				5C929903298E0719009C5C68 /* Plant.swift in Sources */,
-				5C929909298E2B71009C5C68 /* RootSegment.swift in Sources */,
+				D9AB9B4A298F02780078DB8A /* RootSegment.swift in Sources */,
 				5C929932298ED654009C5C68 /* Background.swift in Sources */,
 				5C11AAB4298DFD1C00B48071 /* GameViewController.swift in Sources */,
 				5C11AAAC298DFD1C00B48071 /* AppDelegate.swift in Sources */,
