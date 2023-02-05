@@ -47,6 +47,9 @@ class DirtTileGridNode: SKNode {
         for (index, plant) in plants.enumerated() {
             guard let plant else { continue }
             for (rootSegment, position) in plant.segmentPositions {
+                if position.x < 0 || position.x >= horizonalTileCount || position.y < 0 || position.y >= verticalTileCount {
+                    continue
+                }
                 rootSegmentsGrid[position.y * horizonalTileCount + position.x + index].append(rootSegment)
             }
         }
