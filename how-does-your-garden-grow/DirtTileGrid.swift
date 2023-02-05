@@ -42,12 +42,15 @@ class DirtTileGrid: SKNode {
     }
     
     func displayPlants(plants: [Plant?]) {
+        var rootSegmentsGrid = [[RootSegment]](repeating: [], count: horizonalTileCount * verticalTileCount)
         for (index, plant) in plants.enumerated() {
             guard let plant else { continue }
             for (rootSegment, position) in plant.segmentPositions {
-                guard let dirtTile = self[position.y, position.x + index] else { continue }
-                dirtTile.displayRootSegments(rootSegments: [rootSegment])
+                rootSegmentsGrid[position.y * horizonalTileCount + position.x + index].append(rootSegment)
             }
+        }
+        for (index, dirtTile) in dirtTiles.enumerated() {
+            dirtTile.displayRootSegments(rootSegments: rootSegmentsGrid[index])
         }
     }
 }

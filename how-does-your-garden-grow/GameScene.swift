@@ -29,6 +29,7 @@ class GameScene: SKScene {
     var dirtGrid: DirtTileGrid!
     var plotArray: PlotTileArray!
     var player: Player!
+    var scoreLabel: SKLabelNode!
     
     var currentLevel = Level.spring()
     
@@ -63,7 +64,12 @@ class GameScene: SKScene {
         background.zPosition = -1000
         addChild(background)
 
+        scoreLabel = SKLabelNode(text: "Score \(score)")
+        scoreLabel.position = CGPoint(x: view.frame.maxX - 100, y: view.frame.maxY - 50)
+        addChild(scoreLabel)
+        
         update()
+
         run(
             .repeatForever(.sequence([
                 .wait(forDuration: secondsPerTick),
@@ -87,15 +93,17 @@ class GameScene: SKScene {
                     .run({ [self] in
                         garden.addPlant(position: playerPosition, plant: nextPlant)
                         player.holdPlantSpecies(plantSpecies: nil)
-                        plotArray.displayPlants(plants: garden.plantPlots)
-                        dirtGrid.displayPlants(plants: garden.plantPlots)
+                        redisplay()
                     }),
                     .moveTo(y: view!.frame.size.height, duration: 0.15 * turnDuration),
                 ]))
             }
         }
         tick += 1
-
+        redisplay()
+    }
+    
+    func redisplay() {
         plotArray.displayPlants(plants: garden.plantPlots)
         dirtGrid.displayPlants(plants: garden.plantPlots)
     }
@@ -117,12 +125,15 @@ class GameScene: SKScene {
     func cutPlant(position: Int) {
         guard garden.plantPlots[position] != nil else { return }
         garden.removePlant(position: position)
+        redisplay()
     }
     
     func harvestPlant(position: Int) {
         guard let plant = garden.plantPlots[position] else { return }
         score += plant.award
+        scoreLabel.text = "Score: \(score)"
         garden.removePlant(position: position)
+        redisplay()
     }
     
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -133,7 +144,7 @@ class GameScene: SKScene {
             return node is PlotTile
         }) ?? false
         if touchedAPlot {
-            if var plant = garden.plantPlots[position], plant.grownRootSegments == plant.rootSegments {
+            if let plant = garden.plantPlots[position], plant.grownRootSegments == plant.rootSegments {
                 harvestPlant(position: position)
             } else {
                 cutPlant(position: position)
