@@ -7,7 +7,7 @@
 
 import SpriteKit
 
-let secondsPerTick = 3.0
+let secondsPerTick = 1.0
 let ticksPerPlant = 2
 
 let horizontalTileCount = 17
