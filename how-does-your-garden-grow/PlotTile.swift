@@ -9,20 +9,34 @@ import SpriteKit
 
 class PlotTile: SKEffectNode {
     private var lastSegments: [RootSegment] = []
-    private var plantImage: SKSpriteNode?
+    private var plantImage: SKSpriteNode!
+    private var harvestParticle: SKEmitterNode!
+    private var lastPlant: Plant?
     private var size: CGSize
     init(size: CGSize) {
         self.size = size
         super.init()
+        plantImage = SKSpriteNode(texture: nil, size: size)
+        plantImage.position = CGPoint(x: size.width / 2, y: size.height / 2)
+        plantImage.zPosition = Layer.plants.rawValue
+        addChild(plantImage)
+        
+        harvestParticle = SKEmitterNode(fileNamed: "Harvest")
+        harvestParticle.isPaused = true
+        harvestParticle.position = CGPoint(x: size.width / 2, y: size.width / 2)
+        harvestParticle.zPosition = Layer.glow.rawValue
+        addChild(harvestParticle)
+
     }
     required init?(coder aDecoder: NSCoder) { return nil }
 
     func displayPlant(plant: Plant?) {
-        if let plantImage {
-            plantImage.removeFromParent()
-            self.plantImage = nil
-        }
+        // Assuming you can't display a plant while you already are displaying one
+//        if plant != nil && lastPlant != nil {
+//            return
+//        }
         if let plant {
+            lastPlant = plant
             var imageName = plant.species.rawValue
             let growthPercentage = (Double(plant.grownRootSegments) / Double(plant.rootSegments)) * 100
             if  growthPercentage > 50 {
@@ -30,20 +44,12 @@ class PlotTile: SKEffectNode {
             } else {
                 imageName += "_small"
             }
-            let texture = SKTexture(imageNamed: imageName)
-            plantImage = SKSpriteNode(texture: texture, size: size)
-            plantImage?.position = CGPoint(x: size.width / 2, y: size.height / 2)
-            plantImage?.zPosition = Layer.plants.rawValue
-            addChild(plantImage!)
-            
-            if growthPercentage == 100 {
-                if let harvestParticle = SKEmitterNode(fileNamed: "Harvest") {
-                    harvestParticle.position = CGPointMake(0, -plantImage!.size.height / 2)
-                    // TODO: this doesn't position behind anything but the plant :(
-                    harvestParticle.zPosition = Layer.glow.rawValue
-                    plantImage?.addChild(harvestParticle)
-                }
-            }
+            plantImage.texture = SKTexture(imageNamed: imageName)
+            harvestParticle.isPaused = growthPercentage < 100
+        } else {
+            harvestParticle.isPaused = true
+            plantImage.texture = nil
+            lastPlant = nil
         }
         // TODO: compute delta, add/remove textures for segments, animate frames
     }
