@@ -4,7 +4,7 @@
 
 * Add roots
 
-* Change artwork to large image after ~50%
+* ~~Change artwork to large image after ~50%~~
 
 * Add preview to plant during placement
 
@@ -12,5 +12,4 @@
 
 * ~~Add score/money label~~
 
-* Add some indication when plant is ready to harvest
-    * https://stackoverflow.com/questions/19214040/how-can-you-create-a-glow-around-a-sprite-via-skeffectnode
+* ~~Add some indication when plant is ready to harvest~~
