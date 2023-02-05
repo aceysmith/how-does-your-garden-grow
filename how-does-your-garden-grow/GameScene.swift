@@ -10,7 +10,7 @@ import SpriteKit
 let secondsPerTick = 3.0
 let ticksPerPlant = 2
 
-let horizontalTileCount = 18
+let horizontalTileCount = 17
 let verticleTileCount = 7
 
 enum Layer: CGFloat {
@@ -24,7 +24,7 @@ class GameScene: SKScene {
     
     var tick = 0
     var score = 0
-    var playerPosition = 12
+    var playerPosition = 8
     var garden = Garden(horizonalTileCount: horizontalTileCount, verticalTileCount: verticleTileCount)
     var dirtGrid: DirtTileGrid!
     var plotArray: PlotTileArray!
