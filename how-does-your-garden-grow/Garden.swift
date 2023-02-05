@@ -29,10 +29,14 @@ struct Garden {
     }
     
     mutating func grow() {
-        let sortedPlantsByGrown = plantPlots.enumerated().sorted(by: {$0.element?.grownRootSegments.count ?? 0 > $1.element?.grownRootSegments.count ?? 0})
+        let sortedPlantsByGrown = plantPlots.enumerated().sorted(by: {
+            $0.element?.grownRootSegments.count ?? 0 > $1.element?.grownRootSegments.count ?? 0
+        })
         for (i, plant) in sortedPlantsByGrown {
             if var plant {
-                _ = plant.grow()
+                _ = plant.grow(canGrow: { position in
+                    return false
+                })
                 self.plantPlots[i] = plant
             }
          }

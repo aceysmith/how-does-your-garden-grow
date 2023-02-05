@@ -7,108 +7,111 @@
 
 import SpriteKit
 
-let secondsPerTick = 0.2
-let ticksPerPlant = 10
+let secondsPerTick = 3.0
+let ticksPerPlant = 2
 
 let horizontalTileCount = 24
 let verticleTileCount = 7
+
+enum Layer: CGFloat {
+    case background = -100
+    case dirt = -20
+    case sky = -10
+    case player = 10
+}
 
 class GameScene: SKScene {
     
     var tick = 0
     var score = 0
-    var armPosition = 12
+    var playerPosition = 12
     var garden = Garden(horizonalTileCount: horizontalTileCount, verticalTileCount: verticleTileCount)
     var dirtGrid: DirtTileGrid!
     var plotArray: PlotTileArray!
-    var arm: SKShapeNode!
-    var hand: SKSpriteNode!
+    var player: Player!
     
     var currentLevel = Level.spring()
     
+    var dirtInset: CGFloat = .zero
+    var dirtHeight: CGFloat = .zero
+    var tileWidth: CGFloat = .zero
+    
     override func didMove(to view: SKView) {
-        let tileWidth = Int(floor(view.frame.width / CGFloat(horizontalTileCount)))
-        let dirtHeight = verticleTileCount * tileWidth
+        tileWidth = floor(view.frame.width / CGFloat(horizontalTileCount))
+        dirtInset = (view.frame.width - (tileWidth * CGFloat(horizontalTileCount))) / 2
+        dirtHeight = CGFloat(verticleTileCount) * tileWidth
         let plantSize = CGSize(width: tileWidth, height: 2 * tileWidth)
 
-        arm = SKShapeNode(rect: CGRect(origin: .zero, size: CGSize(width: 30, height: 1000)))
-        arm.fillColor = .red
-        arm.zPosition = 10
-        addChild(arm)
-        hand = SKSpriteNode(texture: nil, size: plantSize)
-        hand.zPosition = 20
-        arm.addChild(hand)
+        player = Player(size: CGSize(width: 100, height: 500), plantSize: plantSize)
+        player.anchorPoint = CGPoint(x: 0.5, y: 0)
+        player.position = CGPoint(x: xPosForPosition(position: playerPosition), y: view.frame.height)
+//        player.zPosition = 1000
+        addChild(player)
                 
         plotArray = PlotTileArray(tileSize: plantSize, tileCount: horizontalTileCount)
-        plotArray.position = CGPoint(x: (view.frame.width - CGFloat(horizontalTileCount * tileWidth)) / 2, y: CGFloat(dirtHeight))
+        plotArray.position = CGPoint(x: (view.frame.width - (CGFloat(horizontalTileCount) * tileWidth)) / 2, y: CGFloat(dirtHeight))
         addChild(plotArray)
         
         dirtGrid = DirtTileGrid(
-            tileWidth: tileWidth,
+            tileWidth: Int(tileWidth),
             horizonalTileCount: horizontalTileCount,
             verticalTileCount: verticleTileCount
         )
-        dirtGrid.position = CGPoint(x: (view.frame.width - CGFloat(horizontalTileCount * tileWidth)) / 2, y: 0)
+        dirtGrid.position = CGPoint(x: (view.frame.width - (CGFloat(horizontalTileCount) * tileWidth)) / 2, y: 0)
         addChild(dirtGrid)
         
-        let background = Background(size: view.frame.size, dirtHeight: dirtHeight)
+        let background = Background(size: view.frame.size, dirtHeight: Int(dirtHeight))
         background.zPosition = -1000
         addChild(background)
 
-        moveArm(position: armPosition)
-        loadHand(turn: 0)
-
-        arm.run(.repeatForever(.sequence([
-            .moveTo(y: view.frame.size.height + 100, duration: 0.1),
-            .moveTo(y: CGFloat(dirtHeight), duration: Double(ticksPerPlant) * secondsPerTick - 0.1)
-        ])))
+        update()
         run(
             .repeatForever(.sequence([
                 .wait(forDuration: secondsPerTick),
-                .run({
-                    self.update()
+                .run({ [self] in
+                    update()
                 })
             ]))
         )
     }
         
     func update() {
-        let oldGarden = garden
-
         garden.grow()
-
-        tick += 1
 
         if tick % ticksPerPlant == 0 {
             let turn = tick / ticksPerPlant
-            loadHand(turn: turn + 1)
-            if let plant = currentLevel.plantForTurn(turn: turn) {
-                garden.addPlant(position: armPosition, plant: plant)
-                moveArm(position: Int(arc4random()) % horizontalTileCount)
+            let turnDuration = Double(ticksPerPlant) * secondsPerTick
+            if let nextPlant = currentLevel.plantForTurn(turn: turn) {
+                player.holdPlantSpecies(plantSpecies: nextPlant.species)
+                player.run(.sequence([
+                    .moveTo(y: CGFloat(dirtHeight), duration: 0.8 * turnDuration),
+                    .run({ [self] in
+                        garden.addPlant(position: playerPosition, plant: nextPlant)
+                        player.holdPlantSpecies(plantSpecies: nil)
+                        plotArray.displayPlants(plants: garden.plantPlots)
+                    }),
+                    .moveTo(y: view!.frame.size.height, duration: 0.2 * turnDuration),
+                ]))
             }
         }
+        tick += 1
 
-        displayGarden(oldGarden: oldGarden, newGarden: garden)
+        plotArray.displayPlants(plants: garden.plantPlots)
+        dirtGrid.displayPlants(plants: garden.plantPlots)
     }
     
-    func displayGarden(oldGarden: Garden, newGarden: Garden) {
-        plotArray.displayPlants(plants: newGarden.plantPlots)
-        dirtGrid.displayPlants(plants: newGarden.plantPlots)
-        // TODO: First pass, add some representation of whether root segments have grown at each tile
-        // TODO: Actually animate plots with a big ol SKAction group sequence of all of the SKSpriteNodes
+    func xPosForPosition(position: Int) -> CGFloat {
+        return dirtInset + (tileWidth / 2) + (CGFloat(position) * tileWidth)
     }
     
-    func loadHand(turn: Int) {
-        if let nextPlant = currentLevel.plantForTurn(turn: turn) {
-            hand.texture = SKTexture(imageNamed: "\(nextPlant.species.rawValue)_large")
-        } else {
-            hand.texture = nil
-        }
-    }
-    
-    func moveArm(position: Int) {
-        armPosition = position
-        arm.run(.moveTo(x: CGFloat((Double(position) / Double(horizontalTileCount))) * view!.frame.width, duration: 0.2))
+    func positionForXPos(xPos: CGFloat) -> Int {
+        return min(
+            max(
+                Int((xPos - dirtInset) / tileWidth),
+                0
+            ),
+            horizontalTileCount - 1
+        )
     }
     
     func cutPlant(position: Int) {
@@ -122,18 +125,42 @@ class GameScene: SKScene {
         garden.removePlant(position: position)
     }
     
-    //        let leftRoot = addRoot(initialSize: 0)
-    //        leftRoot.position = CGPoint(x: view.frame.midX - 300, y: view.frame.midY)
-    //        let midRoot = addRoot(initialSize: 1)
-    //        midRoot.position = CGPoint(x: view.frame.midX - 100, y: view.frame.midY)
-    //        let rightRoot = addRoot(initialSize: 2)
-    //        rightRoot.position = CGPoint(x: view.frame.midX + 100, y: view.frame.midY)
-    //
-    //        addChild(leftRoot)
-    //        addChild(midRoot)
-    //        addChild(rightRoot)
-
+    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
+        let touchLocation = touches.first!.location(in: scene!)
+        let position = positionForXPos(xPos: touchLocation.x)
+        
+        let touchedAPlot = scene?.nodes(at: touchLocation).contains(where: { node in
+            return node is PlotTile
+        }) ?? false
+        if touchedAPlot {
+            if let plant = garden.plantPlots[position], plant.grownRootSegments.count == plant.rootSegments.count {
+                harvestPlant(position: position)
+            } else {
+                cutPlant(position: position)
+            }
+        } else {
+            playerPosition = position
+            player.run(
+                .moveTo(
+                    x: xPosForPosition(position: position),
+                    duration: 0.2
+                )
+            )
+        }
+    }
+    
     func addRoot(initialSize: Double) -> SKSpriteNode {
+        //        let leftRoot = addRoot(initialSize: 0)
+        //        leftRoot.position = CGPoint(x: view.frame.midX - 300, y: view.frame.midY)
+        //        let midRoot = addRoot(initialSize: 1)
+        //        midRoot.position = CGPoint(x: view.frame.midX - 100, y: view.frame.midY)
+        //        let rightRoot = addRoot(initialSize: 2)
+        //        rightRoot.position = CGPoint(x: view.frame.midX + 100, y: view.frame.midY)
+        //
+        //        addChild(leftRoot)
+        //        addChild(midRoot)
+        //        addChild(rightRoot)
+
         let bigLongRoot = SKTexture(imageNamed: "bigRoot")
         let bigLongRootSize = bigLongRoot.size()
         let width = bigLongRootSize.width

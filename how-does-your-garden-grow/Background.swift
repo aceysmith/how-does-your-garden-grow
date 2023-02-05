@@ -13,7 +13,7 @@ class Background: SKNode {
         
         let dirt = SKSpriteNode(imageNamed: "dirt")
         dirt.anchorPoint = .zero
-        dirt.zPosition = -20
+        dirt.zPosition = Layer.dirt.rawValue
         addChild(dirt)
 
         let sky = SKSpriteNode(imageNamed: "sky")
@@ -21,7 +21,7 @@ class Background: SKNode {
         sky.xScale = size.width / sky.texture!.size().width
         sky.yScale = size.width / sky.texture!.size().width
         sky.position = CGPoint(x: 0, y: dirtHeight)
-        sky.zPosition = -10
+        sky.zPosition = Layer.sky.rawValue
         addChild(sky)
     }
     required init?(coder aDecoder: NSCoder) { return nil }

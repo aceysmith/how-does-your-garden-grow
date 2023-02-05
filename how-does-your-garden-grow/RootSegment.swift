@@ -5,14 +5,7 @@
 //  Created by Adam Christopher Smith on 2/3/23.
 //
 
-struct RootSegment {
-    enum Direction: Int {
-        case left = 0
-        case right
-        case up
-        case down
-    }
-    
+struct RootSegment {    
     var grown = false
     let parentDirection: Direction
     var segments: [RootSegment?]
@@ -40,14 +33,9 @@ struct RootSegment {
             return []
         }
         var totalSegments = [self]
-        if let left = self.left {
-            totalSegments += left.grownSubSegments
-        }
-        if let right = self.right {
-            totalSegments += right.grownSubSegments
-        }
-        if let down = self.down {
-            totalSegments += down.grownSubSegments
+        for segment in self.segments {
+            guard let segment else { continue }
+            totalSegments += segment.grownSubSegments
         }
         return totalSegments
     }
@@ -55,38 +43,20 @@ struct RootSegment {
     // A segment is a sub-segment of itself
     var subSegments: [RootSegment] {
         var segments = [self]
-        if let left = self.left {
-            segments += left.subSegments
-        }
-        if let right = self.right {
-            segments += right.subSegments
-        }
-        if let down = self.down {
-            segments += down.subSegments
+        for segment in self.segments {
+            guard let segment else { continue }
+            segments += segment.subSegments
         }
         return segments
     }
     
+    
     func computeSegmentPositions(plantRelativePosition: PlantRelativePosition) -> [(RootSegment, PlantRelativePosition)] {
         var segmentPositions = [(self, plantRelativePosition)]
-        if let left = self.left {
-            segmentPositions += left.computeSegmentPositions(
-                plantRelativePosition: PlantRelativePosition(x: plantRelativePosition.x - 1, y: plantRelativePosition.y)
-            )
-        }
-        if let right = self.right {
-            segmentPositions += right.computeSegmentPositions(
-                plantRelativePosition: PlantRelativePosition(x: plantRelativePosition.x + 1, y: plantRelativePosition.y)
-            )
-        }
-        if let down = self.down {
-            segmentPositions += down.computeSegmentPositions(
-                plantRelativePosition: PlantRelativePosition(x: plantRelativePosition.x, y: plantRelativePosition.y + 1)
-            )
-        }
-        if let up = self.up {
-            segmentPositions += up.computeSegmentPositions(
-                plantRelativePosition: PlantRelativePosition(x: plantRelativePosition.x, y: plantRelativePosition.y - 1)
+        for (index, segment) in self.segments.enumerated() {
+            guard let segment else { continue }
+            segmentPositions += segment.computeSegmentPositions(
+                plantRelativePosition: plantRelativePosition.relativePosition(moving: Direction(rawValue: index)!)
             )
         }
         return segmentPositions
@@ -94,15 +64,17 @@ struct RootSegment {
     
     // Grow next segment
     // TODO: This is ugly as hell, refactor now and/or after jam
-    mutating func grow() -> Bool {
+    mutating func grow(position: PlantRelativePosition, canGrow: (PlantRelativePosition) -> Bool) -> Bool {
         // TODO: only set to true if target tile is unoccupied
         if !grown {
             grown = true
             return true
         } else {
-            for (i, segment) in segments.enumerated() {
+            for (i, segment) in segments.enumerated().shuffled() {
                 if var segment {
-                    let didGrow = segment.grow()
+                    let nextPosition = position.relativePosition(moving: Direction(rawValue: i)!)
+//                    if !canGrow(nextPosition) { continue }
+                    let didGrow = segment.grow(position: nextPosition, canGrow: canGrow)
                     if didGrow {
                         self.segments[i] = segment
                         return true

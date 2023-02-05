@@ -14,8 +14,6 @@ class PlotTile: SKShapeNode {
     init(size: CGSize) {
         self.size = size
         super.init()
-//        self.path = CGPath(rect: CGRect(origin: .zero, size: size), transform: nil)
-//        self.strokeColor = .green
     }
     required init?(coder aDecoder: NSCoder) { return nil }
 
@@ -25,7 +23,7 @@ class PlotTile: SKShapeNode {
             self.plantImage = nil
         }
         if let plant {
-            let texture = SKTexture(imageNamed: "\(plant.species.rawValue)_large")
+            let texture = SKTexture(imageNamed: "\(plant.species.rawValue)_small")
             self.plantImage = SKSpriteNode(texture: texture, size: self.size)
             self.plantImage?.position = CGPoint(x: self.size.width / 2, y: self.size.height / 2)
             addChild(self.plantImage!)

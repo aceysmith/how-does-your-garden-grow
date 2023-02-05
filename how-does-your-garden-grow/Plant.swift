@@ -16,9 +16,34 @@ enum PlantSpecies: String {
     case Tomato
 }
 
+enum Direction: Int {
+    case left = 0
+    case right
+    case up
+    case down
+}
+
 struct PlantRelativePosition {
     let x: Int
     let y: Int
+    func relativePosition(moving direction:Direction) -> PlantRelativePosition {
+        var nextPosition: PlantRelativePosition
+        switch (direction) {
+        case .up:
+            nextPosition = PlantRelativePosition(x: self.x, y: self.y - 1)
+            break
+        case .down:
+            nextPosition = PlantRelativePosition(x: self.x, y: self.y + 1)
+            break
+        case .left:
+            nextPosition = PlantRelativePosition(x: self.x - 1, y: self.y)
+            break
+        case .right:
+            nextPosition = PlantRelativePosition(x: self.x + 1, y: self.y)
+            break
+        }
+        return nextPosition
+    }
 }
 
 struct Plant {
@@ -43,9 +68,8 @@ struct Plant {
         return root.computeSegmentPositions(plantRelativePosition: PlantRelativePosition(x: 0, y: 0))
     }
 
-    // TODO: can this / should this be a delegate to pass the call down to root?
-    mutating func grow() -> Bool {
-        return root.grow()
+    mutating func grow(canGrow: (PlantRelativePosition) -> Bool) -> Bool {
+        return root.grow(position: PlantRelativePosition(x: 0, y: 0), canGrow: canGrow)
     }
 }
 
