@@ -124,7 +124,7 @@ class GameScene: SKScene {
                         plantHeld = false
                         redisplay()
                     }),
-                    .moveTo(y: view!.frame.size.height, duration: 0.15 * turnDuration),
+                    .moveTo(y: view!.frame.size.height + 50, duration: 0.15 * turnDuration),
                 ]))
             } else if !garden.plantPlots.contains(where: { plant in plant != nil }) {
                 gameSceneDelegate?.gameDidFinish(score: score)

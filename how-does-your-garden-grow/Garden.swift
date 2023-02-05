@@ -32,15 +32,16 @@ struct Garden {
         let sortedPlantsByGrown = plantPlots.enumerated().sorted(by: {
             $0.element?.grownRootSegments ?? 0 > $1.element?.grownRootSegments ?? 0
         })
-        var plotFilled = [Bool](repeating: false, count: horizonalTileCount * verticalTileCount)
-        for (i, plant) in plantPlots.enumerated() {
-            guard let plant else { continue }
-            for (rootSegment, relativePosition) in plant.segmentPositions {
-                guard rootSegment.grown == true else { continue }
-                plotFilled[relativePosition.y * horizonalTileCount + relativePosition.x + i] = true
-            }
-        }
         for (i, plant) in sortedPlantsByGrown {
+            var plotFilled = [Bool](repeating: false, count: horizonalTileCount * verticalTileCount)
+            for (i, plant) in plantPlots.enumerated() {
+                guard let plant else { continue }
+                for (rootSegment, relativePosition) in plant.segmentPositions {
+                    guard rootSegment.grown == true else { continue }
+                    plotFilled[relativePosition.y * horizonalTileCount + relativePosition.x + i] = true
+                }
+            }
+
             guard var plant, plant.grownRootSegments < plant.rootSegments else { continue }
             let plantGrew = plant.grow(position: i, canGrow: { position in
                 if position.x < 0 || position.x >= horizonalTileCount || position.y < 0 || position.y >= verticalTileCount {
