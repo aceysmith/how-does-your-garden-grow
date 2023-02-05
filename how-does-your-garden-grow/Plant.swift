@@ -63,7 +63,7 @@ struct Plant {
         self.root = root
         self.award = award
         self.hue = hue
-        self.root.addHue(hue: hue)
+//        self.root.addHue(hue: hue)
     }
     
     var segmentPositions: [(RootSegment, PlantRelativePosition)] {

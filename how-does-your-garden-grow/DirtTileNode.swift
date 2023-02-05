@@ -47,7 +47,6 @@ class DirtTileNode: SKShapeNode {
             spriteNode.alpha = rootSegment.grown ? 1.0 : 0.3
             if !rootSegment.grown {
                 spriteNode.texture = nil
-                spriteNode.color = .clear
                 continue
             }
             let leftGrown   = (rootSegment.left?.grown ?? false)  || (rootSegment.parentDirection == .left && rootSegment.grown)
@@ -60,9 +59,7 @@ class DirtTileNode: SKShapeNode {
                 texture = SKTexture(imageNamed: imageName)
                 spriteNode.zRotation = zRotation
             }
-
-//            spriteNode.color = UIColor(hue: rootSegment.hue, saturation: 0.5, brightness: 1, alpha: 1)
-            spriteNodes[i].texture = texture
+            spriteNode.texture = texture
         }
 
         self.fillColor = rootSegments.count > 1 ? .red.withAlphaComponent(0.3) : .clear

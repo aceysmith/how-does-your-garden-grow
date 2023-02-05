@@ -32,6 +32,22 @@ extension Level {
             .tomato(),
             .carrot(),
             .mustard(),
+            .herb(),
+            .carrot(),
+            .cabbage(),
+            .chard(),
+            .mustard(),
+            .tomato(),
+            .carrot(),
+            .mustard(),
+            .herb(),
+            .carrot(),
+            .cabbage(),
+            .chard(),
+            .mustard(),
+            .tomato(),
+            .carrot(),
+            .mustard(),
         ])
     }
     static func summer() -> Level {

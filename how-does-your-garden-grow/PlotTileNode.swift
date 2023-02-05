@@ -42,6 +42,7 @@ class PlotTileNode: SKEffectNode {
                 imageName += "_small"
             }
             plantImage.texture = SKTexture(imageNamed: imageName)
+            plantImage.alpha = plant.stunted ? 0.5 : 1.0
             harvestParticle.isPaused = growthPercentage < 100
             harvestParticle.isHidden = growthPercentage < 100
         } else {

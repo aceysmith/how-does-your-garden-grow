@@ -7,7 +7,7 @@
 
 import SpriteKit
 
-let secondsPerTick = 1.0
+let secondsPerTick = 2.0
 let ticksPerPlant = 2
 
 let horizontalTileCount = 17
@@ -38,6 +38,7 @@ class GameScene: SKScene {
     var score = 0
     var playerPosition = 8
     var nextPlant: Plant?
+    var plantHeld: Bool = false
     var garden = Garden(horizonalTileCount: horizontalTileCount, verticalTileCount: verticleTileCount)
     var dirtGrid: DirtTileGridNode!
     var plotArray: PlotTileArrayNode!
@@ -77,8 +78,6 @@ class GameScene: SKScene {
         background.zPosition = -1000
         addChild(background)
 
-        let viewTop = convertPoint(fromView: CGPoint(x: 0.0, y: view.bounds.size.height)).y
-        
         scoreLabel = SKLabelNode(text: "Score: \(score)")
         scoreLabel.horizontalAlignmentMode = .right
         scoreLabel.verticalAlignmentMode = .center
@@ -116,11 +115,13 @@ class GameScene: SKScene {
             nextPlant = level.plantForTurn(turn: turn)
             if let nextPlant {
                 player.holdPlantSpecies(plantSpecies: nextPlant.species)
+                plantHeld = true
                 player.run(.sequence([
                     .moveTo(y: CGFloat(dirtHeight), duration: 0.85 * turnDuration),
                     .run({ [self] in
                         garden.addPlant(position: playerPosition, plant: nextPlant)
                         player.holdPlantSpecies(plantSpecies: nil)
+                        plantHeld = false
                         redisplay()
                     }),
                     .moveTo(y: view!.frame.size.height, duration: 0.15 * turnDuration),
@@ -135,7 +136,7 @@ class GameScene: SKScene {
     
     func redisplay() {
         var plants = garden.plantPlots
-        if plants[playerPosition] == nil, nextPlant != nil {
+        if plants[playerPosition] == nil && plantHeld, nextPlant != nil {
             plants[playerPosition] = nextPlant
         }
         plotArray.displayPlants(plants: plants)
