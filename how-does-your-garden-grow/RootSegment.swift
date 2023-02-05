@@ -5,10 +5,13 @@
 //  Created by Adam Christopher Smith on 2/3/23.
 //
 
+import Foundation
+
 struct RootSegment {    
     var grown = false
     let parentDirection: Direction
     var segments: [RootSegment?]
+    var hue: CGFloat = 0
 
     var left: RootSegment? {
         segments[Direction.left.rawValue]
@@ -26,6 +29,25 @@ struct RootSegment {
     init(parentDirection: Direction, left: RootSegment?, right: RootSegment?, up: RootSegment?, down: RootSegment?) {
         self.parentDirection = parentDirection
         self.segments = [left, right, up, down]
+    }
+    
+    mutating func addHue(hue: CGFloat) {
+        self.hue = hue
+        let segments = self.segments
+        var left = self.left
+        left?.addHue(hue: hue)
+        var right = self.right
+        right?.addHue(hue: hue)
+        var up = self.up
+        up?.addHue(hue: hue)
+        var down = self.down
+        down?.addHue(hue: hue)
+        self.segments = [
+            left,
+            right,
+            up,
+            down
+        ]
     }
     
     var grownSubSegments: Int {

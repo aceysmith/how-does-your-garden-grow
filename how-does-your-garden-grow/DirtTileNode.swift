@@ -39,17 +39,23 @@ class DirtTileNode: SKShapeNode {
         } else if rootSegments.count < spriteNodes.count {
             for i in rootSegments.count..<spriteNodes.count {
                 spriteNodes[i].texture = nil
+                spriteNodes[i].color = .clear
             }
         }
 
         for (i, rootSegment) in rootSegments.enumerated() {
+            let spriteNode = spriteNodes[i]
+            if !rootSegment.grown {
+                spriteNode.texture = nil
+                spriteNode.color = .clear
+                continue
+            }
 //            let opacity = rootSegment.grown ? 1.0 : 0.3
             let leftGrown   = (rootSegment.left?.grown ?? false)  || (rootSegment.parentDirection == .left && rootSegment.grown)
             let rightGrown  = (rootSegment.right?.grown ?? false) || (rootSegment.parentDirection == .right && rootSegment.grown)
             let upGrown     = (rootSegment.up?.grown ?? false)    || (rootSegment.parentDirection == .up && rootSegment.grown)
             let downGrown   = (rootSegment.down?.grown ?? false)  || (rootSegment.parentDirection == .down && rootSegment.grown)
             
-            let spriteNode = spriteNodes[i]
             var texture: SKTexture?
             if leftGrown && !rightGrown && !upGrown && !downGrown {
                 texture = SKTexture(imageNamed: "line_tip")
@@ -119,16 +125,17 @@ class DirtTileNode: SKShapeNode {
                 texture = SKTexture(imageNamed: "line_4_way")
                 spriteNode.zRotation = 0
             }
+//            spriteNode.color = UIColor(hue: rootSegment.hue, saturation: 0.5, brightness: 1, alpha: 1)
             spriteNodes[i].texture = texture
         }
 
-        var color: UIColor = .brown.withAlphaComponent(0.3)
-        for rootSegment in rootSegments {
-            if rootSegment.grown == true {
-                color = .brown
-            }
-        }
-        self.fillColor = color
+//        var color: UIColor = .brown.withAlphaComponent(0.3)
+//        for rootSegment in rootSegments {
+//            if rootSegment.grown == true {
+//                color = .brown
+//            }
+//        }
+//        self.fillColor = color
         
         self.strokeColor = rootSegments.count > 1 ? .red : .brown.withAlphaComponent(0.3)
         // TODO: compute delta, add/remove textures for segments, animate frames
