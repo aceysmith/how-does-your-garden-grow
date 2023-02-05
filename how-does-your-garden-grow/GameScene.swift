@@ -10,7 +10,7 @@ import SpriteKit
 let secondsPerTick = 3.0
 let ticksPerPlant = 2
 
-let horizontalTileCount = 24
+let horizontalTileCount = 18
 let verticleTileCount = 7
 
 enum Layer: CGFloat {
@@ -71,12 +71,14 @@ class GameScene: SKScene {
         update()
 
         run(
-            .repeatForever(.sequence([
-                .wait(forDuration: secondsPerTick),
-                .run({ [self] in
-                    update()
-                })
-            ]))
+            .repeatForever(
+                .sequence([
+                    .wait(forDuration: secondsPerTick),
+                    .run({ [self] in
+                        update()
+                    })
+                ])
+            )
         )
     }
         
