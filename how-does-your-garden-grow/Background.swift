@@ -11,14 +11,18 @@ class Background: SKNode {
     init(size: CGSize, dirtHeight: Int) {
         super.init()
         
-        let blueSky = SKSpriteNode(color: .blue, size: size)
-        blueSky.position = CGPoint(x: size.width / 2, y: size.height / 2)
-        addChild(blueSky)
-        
-        let dirt = SKSpriteNode(color: .brown, size: CGSize(width: size.width, height: CGFloat(dirtHeight)))
-        dirt.position = CGPoint(x: size.width / 2, y: CGFloat(dirtHeight) / 2)
+        let dirt = SKSpriteNode(imageNamed: "dirt")
+        dirt.anchorPoint = .zero
+        dirt.zPosition = -20
         addChild(dirt)
+
+        let sky = SKSpriteNode(imageNamed: "sky")
+        sky.anchorPoint = .zero
+        sky.xScale = size.width / sky.texture!.size().width
+        sky.yScale = size.width / sky.texture!.size().width
+        sky.position = CGPoint(x: 0, y: dirtHeight)
+        sky.zPosition = -10
+        addChild(sky)
     }
-    
     required init?(coder aDecoder: NSCoder) { return nil }
 }

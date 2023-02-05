@@ -12,11 +12,12 @@ class DirtTile: SKShapeNode {
     init(size: CGSize) {
         super.init()
         self.path = CGPath(rect: CGRect(origin: .zero, size: size), transform: nil)
-        self.strokeColor = .cyan
+        self.strokeColor = .brown.withAlphaComponent(0.3)
     }
     required init?(coder aDecoder: NSCoder) { return nil }
 
     func displayRootSegments(rootSegments: [RootSegment]) {
+        self.fillColor = .black
         // TODO: compute delta, add/remove textures for segments, animate frames
     }
 }

@@ -24,6 +24,10 @@ struct Garden {
         plantPlots[position] = plant
     }
     
+    mutating func removePlant(position: Int) {
+        plantPlots[position] = nil
+    }
+    
     mutating func grow() {
         // TODO: Do the logic to update all of the plants' segments' grown properties
         for plantIndex in 0..<horizonalTileCount {

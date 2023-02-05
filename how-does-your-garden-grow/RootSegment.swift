@@ -66,4 +66,29 @@ struct RootSegment {
         }
         return segments
     }
+    
+    func computeSegmentPositions(plantRelativePosition: PlantRelativePosition) -> [(RootSegment, PlantRelativePosition)] {
+        var segmentPositions = [(self, plantRelativePosition)]
+        if let left = self.left {
+            segmentPositions += left.computeSegmentPositions(
+                plantRelativePosition: PlantRelativePosition(x: plantRelativePosition.x - 1, y: plantRelativePosition.y)
+            )
+        }
+        if let right = self.right {
+            segmentPositions += right.computeSegmentPositions(
+                plantRelativePosition: PlantRelativePosition(x: plantRelativePosition.x + 1, y: plantRelativePosition.y)
+            )
+        }
+        if let down = self.down {
+            segmentPositions += down.computeSegmentPositions(
+                plantRelativePosition: PlantRelativePosition(x: plantRelativePosition.x, y: plantRelativePosition.y + 1)
+            )
+        }
+        if let up = self.up {
+            segmentPositions += up.computeSegmentPositions(
+                plantRelativePosition: PlantRelativePosition(x: plantRelativePosition.x, y: plantRelativePosition.y - 1)
+            )
+        }
+        return segmentPositions
+    }
 }

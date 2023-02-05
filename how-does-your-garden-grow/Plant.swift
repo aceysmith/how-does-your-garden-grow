@@ -7,8 +7,21 @@
 
 import SpriteKit
 
+enum PlantSpecies: String {
+    case Cabbage
+    case Carrot
+    case Chard
+    case Mustard
+}
+
+struct PlantRelativePosition {
+    let x: Int
+    let y: Int
+}
+
 struct Plant {
     var root: RootSegment
+    let species: PlantSpecies
     let award: Int
     let tint: SKColor
     lazy var rootSegments: [RootSegment] = {
@@ -17,10 +30,15 @@ struct Plant {
     var grownRootSegments: [RootSegment] {
         return root.grownSubSegments
     }
-    init(root: RootSegment, award: Int, tint: SKColor) {
+    init(species: PlantSpecies, root: RootSegment, award: Int, tint: SKColor) {
+        self.species = species
         self.root = root
         self.award = award
         self.tint = tint
+    }
+    
+    var segmentPositions: [(RootSegment, PlantRelativePosition)] {
+        return root.computeSegmentPositions(plantRelativePosition: PlantRelativePosition(x: 0, y: 0))
     }
 }
 
@@ -31,7 +49,7 @@ extension Plant {
         let downOne = RootSegment(parentDirection: .up, left: nil, right: nil, up: nil, down: downTwo)
         let root = RootSegment(parentDirection: .up, left: nil, right: nil, up: nil, down: downOne)
         
-        return Plant(root: root, award: 10, tint: .green)
+        return Plant(species: .Mustard, root: root, award: 10, tint: .green)
     }
 
     static func fighterJet() -> Plant {
@@ -48,6 +66,6 @@ extension Plant {
         let downOne = RootSegment(parentDirection: .up, left: nil, right: nil, up: nil, down: downTwo)
         let root = RootSegment(parentDirection: .up, left: nil, right: nil, up: nil, down: downOne)
 
-        return Plant(root: root, award: 10, tint: .gray)
+        return Plant(species: .Chard, root: root, award: 10, tint: .gray)
     }
 }
