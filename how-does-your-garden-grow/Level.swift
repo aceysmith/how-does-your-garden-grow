@@ -15,7 +15,6 @@ struct Level {
     }
 }
 
-
 extension Level {
     static func spring() -> Level {
         return Level(plants: [
@@ -28,13 +27,13 @@ extension Level {
             .tallBoy()
         ])
     }
-//    static func summer() -> Level {
-//        return Level(plants: <#T##[Plant?]#>)
-//    }
-//    static func fall() -> Level {
-//        return Level(plants: <#T##[Plant?]#>)
-//    }
-//    static func winter() -> Level {
-//        return Level(plants: <#T##[Plant?]#>)
-//    }
+    static func summer() -> Level {
+        return Level(plants: [])
+    }
+    static func fall() -> Level {
+        return Level(plants: [])
+    }
+    static func winter() -> Level {
+        return Level(plants: [])
+    }
 }

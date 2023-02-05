@@ -46,6 +46,7 @@
 		5C929940298F04C9009C5C68 /* Media.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Media.xcassets; sourceTree = "<group>"; };
 		5C929965298F1CF7009C5C68 /* App.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = App.xcassets; sourceTree = "<group>"; };
 		5C929967298F3D02009C5C68 /* Level.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Level.swift; sourceTree = "<group>"; };
+		5C929969298F480F009C5C68 /* MyPlayground.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = MyPlayground.playground; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -92,6 +93,7 @@
 				5C929935298EF30B009C5C68 /* PlotTile.swift */,
 				5C929933298EF2AD009C5C68 /* PlotTileArray.swift */,
 				5C92993A298F02F3009C5C68 /* RootSegment.swift */,
+				5C929969298F480F009C5C68 /* MyPlayground.playground */,
 				5C929940298F04C9009C5C68 /* Media.xcassets */,
 				5C929965298F1CF7009C5C68 /* App.xcassets */,
 				5C11AABA298DFD1D00B48071 /* LaunchScreen.storyboard */,

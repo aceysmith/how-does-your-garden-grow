@@ -91,4 +91,25 @@ struct RootSegment {
         }
         return segmentPositions
     }
+    
+    // Grow next segment
+    // TODO: This is ugly as hell, refactor now and/or after jam
+    mutating func grow() -> Bool {
+        // TODO: only set to true if target tile is unoccupied
+        if !grown {
+            grown = true
+            return true
+        } else {
+            for (i, segment) in segments.enumerated() {
+                if var segment {
+                    let didGrow = segment.grow()
+                    if didGrow {
+                        self.segments[i] = segment
+                        return true
+                    }
+                }
+            }
+            return false
+        }
+    }
 }

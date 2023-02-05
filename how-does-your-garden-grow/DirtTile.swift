@@ -17,7 +17,13 @@ class DirtTile: SKShapeNode {
     required init?(coder aDecoder: NSCoder) { return nil }
 
     func displayRootSegments(rootSegments: [RootSegment]) {
-        self.fillColor = .black
+        var color: UIColor = .brown.withAlphaComponent(0.3)
+        for rootSegment in rootSegments {
+            if rootSegment.grown == true {
+                color = .brown
+            }
+        }
+        self.fillColor = color
         // TODO: compute delta, add/remove textures for segments, animate frames
     }
 }

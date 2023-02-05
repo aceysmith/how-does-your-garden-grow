@@ -24,9 +24,9 @@ struct Plant {
     let species: PlantSpecies
     let award: Int
     let tint: SKColor
-    lazy var rootSegments: [RootSegment] = {
+    var rootSegments: [RootSegment] {
         return root.subSegments
-    }()
+    }
     var grownRootSegments: [RootSegment] {
         return root.grownSubSegments
     }
@@ -39,6 +39,11 @@ struct Plant {
     
     var segmentPositions: [(RootSegment, PlantRelativePosition)] {
         return root.computeSegmentPositions(plantRelativePosition: PlantRelativePosition(x: 0, y: 0))
+    }
+
+    // TODO: can this / should this be a delegate to pass the call down to root?
+    mutating func grow() -> Bool {
+        return root.grow()
     }
 }
 
