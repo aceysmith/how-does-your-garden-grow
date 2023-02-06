@@ -16,40 +16,48 @@
                         <rect key="frame" x="0.0" y="0.0" width="1366" height="1024"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="RLs-z3-r7J">
-                                <rect key="frame" x="20" y="44" width="79" height="35"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="35" id="VTs-Bg-h6S"/>
-                                </constraints>
-                                <state key="normal" title="Button"/>
-                                <buttonConfiguration key="configuration" style="filled" title="Restart"/>
-                                <connections>
-                                    <action selector="restart:" destination="BV1-FR-VrT" eventType="touchUpInside" id="plC-tb-8rx"/>
-                                </connections>
-                            </button>
                             <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Game Over!" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Zkg-qq-x2d">
-                                <rect key="frame" x="521.5" y="475.5" width="323" height="77"/>
+                                <rect key="frame" x="521.5" y="679" width="323" height="60"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="60" id="cDG-ON-UUK"/>
+                                </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="64"/>
                                 <color key="textColor" systemColor="systemGreenColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Score:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vuj-SO-ssf">
-                                <rect key="frame" x="630.5" y="561.5" width="105" height="47"/>
+                                <rect key="frame" x="630.5" y="749" width="105" height="40"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="40" id="nu8-nw-Mxk"/>
+                                </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="39"/>
-                                <color key="textColor" systemColor="systemBrownColor"/>
+                                <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="RLs-z3-r7J">
+                                <rect key="frame" x="631.5" y="839" width="103" height="35"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="35" id="VTs-Bg-h6S"/>
+                                </constraints>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="filled" title="Play Again">
+                                    <color key="baseForegroundColor" systemColor="labelColor"/>
+                                    <color key="baseBackgroundColor" systemColor="systemGreenColor"/>
+                                </buttonConfiguration>
+                                <connections>
+                                    <action selector="restart:" destination="BV1-FR-VrT" eventType="touchUpInside" id="plC-tb-8rx"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="4qk-I5-YsI"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
-                            <constraint firstItem="RLs-z3-r7J" firstAttribute="leading" secondItem="4qk-I5-YsI" secondAttribute="leading" constant="20" id="2c7-in-J3w"/>
-                            <constraint firstItem="Zkg-qq-x2d" firstAttribute="centerX" secondItem="4qk-I5-YsI" secondAttribute="centerX" id="2do-UH-BoH"/>
-                            <constraint firstItem="4qk-I5-YsI" firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="RLs-z3-r7J" secondAttribute="trailing" constant="20" id="NXQ-Cd-flc"/>
-                            <constraint firstItem="Zkg-qq-x2d" firstAttribute="centerY" secondItem="4qk-I5-YsI" secondAttribute="centerY" id="aW5-gX-HSa"/>
-                            <constraint firstItem="RLs-z3-r7J" firstAttribute="top" secondItem="4qk-I5-YsI" secondAttribute="top" constant="20" id="iuq-pf-g0P"/>
+                            <constraint firstItem="Zkg-qq-x2d" firstAttribute="centerX" secondItem="4qk-I5-YsI" secondAttribute="centerX" id="5Sd-pS-u8Y"/>
+                            <constraint firstItem="4qk-I5-YsI" firstAttribute="bottom" secondItem="RLs-z3-r7J" secondAttribute="bottom" constant="130" id="DEZ-aN-Wui"/>
+                            <constraint firstItem="RLs-z3-r7J" firstAttribute="centerX" secondItem="4qk-I5-YsI" secondAttribute="centerX" id="h3C-VH-GyZ"/>
+                            <constraint firstItem="RLs-z3-r7J" firstAttribute="top" secondItem="vuj-SO-ssf" secondAttribute="bottom" constant="50" id="jaz-ay-eu4"/>
                             <constraint firstItem="vuj-SO-ssf" firstAttribute="centerX" secondItem="4qk-I5-YsI" secondAttribute="centerX" id="pSW-61-8aq"/>
-                            <constraint firstItem="vuj-SO-ssf" firstAttribute="top" secondItem="Zkg-qq-x2d" secondAttribute="bottom" constant="9" id="q1h-5f-U2v"/>
+                            <constraint firstItem="vuj-SO-ssf" firstAttribute="top" secondItem="Zkg-qq-x2d" secondAttribute="bottom" constant="10" id="q1h-5f-U2v"/>
                         </constraints>
                     </view>
                     <connections>
@@ -64,11 +72,11 @@
         </scene>
     </scenes>
     <resources>
+        <systemColor name="labelColor">
+            <color red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-        </systemColor>
-        <systemColor name="systemBrownColor">
-            <color red="0.63529411764705879" green="0.51764705882352946" blue="0.36862745098039218" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="systemGreenColor">
             <color red="0.20392156862745098" green="0.7803921568627451" blue="0.34901960784313724" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

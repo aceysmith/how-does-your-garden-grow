@@ -71,10 +71,10 @@ class GameViewController: UIViewController, GameSceneDelegate {
             started = false
             scene?.isPaused = true
             scoreLabel.text = "Total Score: \(totalScore)"
+            totalScore = 0
             gameOverLabel.isHidden = false
             scoreLabel.isHidden = false
             restartButton.isHidden = false
-            print(totalScore)
         }
     }
 }
