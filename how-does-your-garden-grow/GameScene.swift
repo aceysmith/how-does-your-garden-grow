@@ -13,6 +13,8 @@ let ticksPerPlant = 2
 let horizontalTileCount = 17
 let verticleTileCount = 6
 
+let uiFont = "HelveticaNeue-Bold"
+
 enum Layer: CGFloat {
     case sky
     case glow
@@ -27,12 +29,14 @@ enum Layer: CGFloat {
 
 protocol GameSceneDelegate {
     func gameDidFinish(score: Int)
+    func gameDidStart(_ started: Bool)
 }
 
 class GameScene: SKScene {
     var gameSceneDelegate: GameSceneDelegate?
     var level: Level = .spring()
     var levelNumber = 0
+    var started = false
     
     var tick = 0
     var score = 0
@@ -45,6 +49,8 @@ class GameScene: SKScene {
     var player: PlayerNode!
     var levelLabel: SKLabelNode!
     var scoreLabel: SKLabelNode!
+    var titleLabel: SKSpriteNode!
+    var helpLabel: SKLabelNode!
     
     var dirtInset: CGFloat = .zero
     var dirtHeight: CGFloat = .zero
@@ -77,23 +83,50 @@ class GameScene: SKScene {
         let background = BackgroundNode(size: view.frame.size, dirtHeight: Int(dirtHeight))
         background.zPosition = -1000
         addChild(background)
+        
+        if !started {
+            titleLabel = SKSpriteNode(imageNamed: "title")
+            titleLabel.zPosition = Layer.ui.rawValue
+            titleLabel.xScale = 0.75
+            titleLabel.position = CGPoint(x: frame.midX, y: frame.midY)
+            addChild(titleLabel)
+            
+            helpLabel = SKLabelNode(text: "Tap to Plant, Pull and Harvest! Tap to Start >")
+            helpLabel.fontSize = 40
+            helpLabel.fontName = uiFont
+            helpLabel.horizontalAlignmentMode = .center
+            helpLabel.verticalAlignmentMode = .center
+            helpLabel.position = CGPoint(x: titleLabel.frame.midX, y: titleLabel.frame.minY - 50)
+            helpLabel.zPosition = Layer.ui.rawValue
+            addChild(helpLabel)
+        }
 
         scoreLabel = SKLabelNode(text: "Score: \(score)")
+        scoreLabel.fontName = uiFont
         scoreLabel.horizontalAlignmentMode = .right
         scoreLabel.verticalAlignmentMode = .center
         scoreLabel.position = CGPoint(x: frame.maxX - 50, y: frame.maxY - 50)
         scoreLabel.zPosition = Layer.ui.rawValue
+        scoreLabel.isHidden = !started
         addChild(scoreLabel)
         
         levelLabel = SKLabelNode(text: "Level: \(levelNumber+1) of \(Level.levels.count)")
+        levelLabel.fontName = uiFont
         levelLabel.horizontalAlignmentMode = .left
         levelLabel.verticalAlignmentMode = .center
         levelLabel.position = CGPoint(x: frame.minX + 50, y: frame.maxY - 50)
         levelLabel.zPosition = Layer.ui.rawValue
+        levelLabel.isHidden = !started
         addChild(levelLabel)
         
+        if started {
+            startUpdates()
+        }
+    }
+    
+    func startUpdates() {
         update()
-
+        
         run(
             .repeatForever(
                 .sequence([
@@ -172,6 +205,16 @@ class GameScene: SKScene {
     }
     
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
+        if !started {
+            started = true
+            gameSceneDelegate?.gameDidStart(started)
+            titleLabel?.isHidden = true
+            helpLabel?.isHidden = true
+            scoreLabel?.isHidden = false
+            levelLabel?.isHidden = false
+            startUpdates()
+        }
+        
         let touchLocation = touches.first!.location(in: scene!)
         let position = positionForXPos(xPos: touchLocation.x)
         

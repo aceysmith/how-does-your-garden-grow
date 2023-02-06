@@ -15,6 +15,7 @@ class GameViewController: UIViewController, GameSceneDelegate {
     var scene: GameScene?
     var levelNumber = 0
     var totalScore = 0
+    var started = false
     
     @IBOutlet weak var gameOverLabel: UILabel!
     @IBOutlet weak var scoreLabel: UILabel!
@@ -38,6 +39,7 @@ class GameViewController: UIViewController, GameSceneDelegate {
         scene.gameSceneDelegate = self
         scene.level = Level.levels[levelNumber]
         scene.levelNumber = levelNumber
+        scene.started = started
         scene.scaleMode = .aspectFill
         scene.view?.ignoresSiblingOrder = true
         skView.presentScene(scene)
@@ -56,12 +58,17 @@ class GameViewController: UIViewController, GameSceneDelegate {
         return true
     }
     
+    func gameDidStart(_ started: Bool) {
+        self.started = started
+    }
+    
     func gameDidFinish(score: Int) {
         levelNumber += 1
         totalScore += score
         if levelNumber < Level.levels.count {
             presentScene()
         } else {
+            started = false
             scene?.isPaused = true
             scoreLabel.text = "Total Score: \(totalScore)"
             gameOverLabel.isHidden = false
