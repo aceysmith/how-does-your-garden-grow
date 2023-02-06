@@ -17,7 +17,7 @@ class BackgroundNode: SKNode {
         dirt.zPosition = Layer.dirt.rawValue
         addChild(dirt)
 
-        let sky = SKSpriteNode(imageNamed: "sky")
+        let sky = SKSpriteNode(imageNamed: "garden")
         sky.anchorPoint = .zero
         sky.xScale = size.width / sky.texture!.size().width
         sky.yScale = size.width / sky.texture!.size().width
