@@ -45,7 +45,9 @@ class GameScene: SKScene {
     var plantHeld: Bool = false
     var garden = Garden(horizonalTileCount: horizontalTileCount, verticalTileCount: verticleTileCount)
     var dirtGrid: DirtTileGridNode!
+    var dirtGridPreview: DirtTileGridNode!
     var plotArray: PlotTileArrayNode!
+    var plotArrayPreview: PlotTileArrayNode!
     var player: PlayerNode!
     var levelLabel: SKLabelNode!
     var scoreLabel: SKLabelNode!
@@ -68,18 +70,40 @@ class GameScene: SKScene {
         player.zPosition = Layer.player.rawValue
         addChild(player)
                 
-        plotArray = PlotTileArrayNode(tileSize: plantSize, tileCount: horizontalTileCount)
+        plotArray = PlotTileArrayNode(
+            displayPreview: false,
+            tileSize: plantSize,
+            tileCount: horizontalTileCount
+        )
         plotArray.position = CGPoint(x: (view.frame.width - (CGFloat(horizontalTileCount) * tileWidth)) / 2, y: CGFloat(dirtHeight))
         addChild(plotArray)
-        
+
+        plotArrayPreview = PlotTileArrayNode(
+            displayPreview: true,
+            tileSize: plantSize,
+            tileCount: horizontalTileCount
+        )
+        plotArrayPreview.position = CGPoint(x: (view.frame.width - (CGFloat(horizontalTileCount) * tileWidth)) / 2, y: CGFloat(dirtHeight))
+        addChild(plotArrayPreview)
+
         dirtGrid = DirtTileGridNode(
+            displayPreview: false,
             tileWidth: Int(tileWidth),
             horizonalTileCount: horizontalTileCount,
             verticalTileCount: verticleTileCount
         )
         dirtGrid.position = CGPoint(x: (view.frame.width - (CGFloat(horizontalTileCount) * tileWidth)) / 2, y: 0)
         addChild(dirtGrid)
-        
+
+        dirtGridPreview = DirtTileGridNode(
+            displayPreview: true,
+            tileWidth: Int(tileWidth),
+            horizonalTileCount: horizontalTileCount,
+            verticalTileCount: verticleTileCount
+        )
+        dirtGridPreview.position = CGPoint(x: (view.frame.width - (CGFloat(horizontalTileCount) * tileWidth)) / 2, y: 0)
+        addChild(dirtGridPreview)
+
         let background = BackgroundNode(size: view.frame.size, dirtHeight: Int(dirtHeight))
         background.zPosition = -1000
         addChild(background)
@@ -169,10 +193,16 @@ class GameScene: SKScene {
     
     func redisplay() {
         var plants = garden.plantPlots
-        if plants[playerPosition] == nil && plantHeld, nextPlant != nil {
-            plants[playerPosition] = nextPlant
-        }
         plotArray.displayPlants(plants: plants)
+
+        if plants[playerPosition] == nil && plantHeld && nextPlant != nil {
+            plants[playerPosition] = nextPlant
+
+            var previewPlants = [Plant?](repeating: nil, count: horizontalTileCount)
+            previewPlants[playerPosition] = nextPlant
+            plotArrayPreview.displayPlants(plants: previewPlants)
+        }
+        dirtGridPreview.displayPlants(plants: plants)
         dirtGrid.displayPlants(plants: plants)
     }
     

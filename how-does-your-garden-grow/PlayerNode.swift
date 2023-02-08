@@ -23,8 +23,10 @@ class PlayerNode: SKSpriteNode {
     func holdPlantSpecies(plantSpecies: PlantSpecies?) {
         if let plantSpecies {
             hand.texture = SKTexture(imageNamed: "\(plantSpecies.rawValue)_small")
+            hand.isHidden = false
         } else {
             hand.texture = nil
+            hand.isHidden = true
         }
     }
 }

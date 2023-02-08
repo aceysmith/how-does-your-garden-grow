@@ -9,14 +9,16 @@ import SpriteKit
 
 class PlotTileArrayNode: SKNode {
     private let tileCount: Int
+    private let displayPreview: Bool
     
     private let plotTiles: [PlotTileNode]
     
-    public init(tileSize: CGSize, tileCount: Int) {
+    public init(displayPreview: Bool, tileSize: CGSize, tileCount: Int) {
         self.tileCount = tileCount
+        self.displayPreview = displayPreview
         var plotTiles = [PlotTileNode]()
         for _ in 0..<tileCount {
-            plotTiles.append(PlotTileNode(size: tileSize))
+            plotTiles.append(PlotTileNode(size: tileSize, displayPreview: displayPreview))
         }
         self.plotTiles = plotTiles
         super.init()

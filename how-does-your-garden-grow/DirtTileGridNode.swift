@@ -10,15 +10,16 @@ import SpriteKit
 class DirtTileGridNode: SKNode {
     private let horizonalTileCount: Int
     private let verticalTileCount: Int
-
+    private let displayPreview: Bool
     private let dirtTiles: [DirtTileNode]
     
-    public init(tileWidth: Int, horizonalTileCount: Int, verticalTileCount: Int) {
+    public init(displayPreview: Bool, tileWidth: Int, horizonalTileCount: Int, verticalTileCount: Int) {
         self.horizonalTileCount = horizonalTileCount
         self.verticalTileCount = verticalTileCount
+        self.displayPreview = displayPreview
         var dirtTiles = [DirtTileNode]()
         for _ in 0..<verticalTileCount * horizonalTileCount {
-            dirtTiles.append(DirtTileNode(size: CGSize(width: tileWidth, height: tileWidth)))
+            dirtTiles.append(DirtTileNode(size: CGSize(width: tileWidth, height: tileWidth), displayPreview: displayPreview))
         }
         self.dirtTiles = dirtTiles
         super.init()
@@ -27,7 +28,8 @@ class DirtTileGridNode: SKNode {
                 x: (index % horizonalTileCount) * tileWidth,
                 y: (verticalTileCount - (index / horizonalTileCount) - 1) * tileWidth
             )
-            tile.zPosition = Layer.dirtPreview.rawValue
+
+            tile.zPosition = displayPreview ? Layer.dirtPreview.rawValue : Layer.dirtRoot.rawValue
             addChild(tile)
         }
     }
