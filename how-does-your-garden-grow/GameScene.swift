@@ -16,14 +16,15 @@ let verticleTileCount = 6
 let uiFont = "HelveticaNeue-Bold"
 
 enum Layer: CGFloat {
-    case sky
+    case skyBackground
     case glow
-    case dirt
+    case dirtBackground
     case dirtPreview
     case dirtRoot
     case player
     case hand
     case plants
+    case plantsPreview
     case ui
 }
 
@@ -192,18 +193,22 @@ class GameScene: SKScene {
     }
     
     func redisplay() {
-        var plants = garden.plantPlots
+        let plants = garden.plantPlots
         plotArray.displayPlants(plants: plants)
-
-        if plants[playerPosition] == nil && plantHeld && nextPlant != nil {
-            plants[playerPosition] = nextPlant
-
-            var previewPlants = [Plant?](repeating: nil, count: horizontalTileCount)
-            previewPlants[playerPosition] = nextPlant
-            plotArrayPreview.displayPlants(plants: previewPlants)
-        }
-        dirtGridPreview.displayPlants(plants: plants)
         dirtGrid.displayPlants(plants: plants)
+
+        var plotPreviewPlants = [Plant?](repeating: nil, count: horizontalTileCount)
+        if plantHeld {
+            plotPreviewPlants[playerPosition] = nextPlant
+            plotPreviewPlants[playerPosition]?.stunted = plants[playerPosition] != nil
+        }
+        plotArrayPreview.displayPlants(plants: plotPreviewPlants)
+
+        var gridPreviewPlants = plants
+        if plantHeld && plants[playerPosition] == nil {
+            gridPreviewPlants[playerPosition] = nextPlant
+        }
+        dirtGridPreview.displayPlants(plants: gridPreviewPlants)
     }
     
     func xPosForPosition(position: Int) -> CGFloat {
@@ -254,10 +259,13 @@ class GameScene: SKScene {
         if touchedAPlot, let touchedPlant = garden.plantPlots[position] {
             if touchedPlant.grownRootSegments == touchedPlant.rootSegments {
                 harvestPlant(position: position)
+                return
             } else if touchedPlant.stunted {
                 cutPlant(position: position)
+                return
             }
-        } else if playerPosition != position {
+        }
+        if playerPosition != position {
             playerPosition = position
             redisplay()
             player.run(

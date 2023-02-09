@@ -20,11 +20,11 @@ class PlotTileNode: SKEffectNode {
         super.init()
         plantImage = SKSpriteNode(texture: nil, size: size)
         plantImage.position = CGPoint(x: size.width / 2, y: size.height / 2)
-        plantImage.zPosition = Layer.plants.rawValue
+        plantImage.zPosition = displayPreview ? Layer.plantsPreview.rawValue : Layer.plants.rawValue
         plantImage.color = .brown
         plantImage.isHidden = true
         addChild(plantImage)
-        
+
         if !displayPreview {
             harvestParticle = SKEmitterNode(fileNamed: "Harvest")
             harvestParticle?.isPaused = true
@@ -48,7 +48,7 @@ class PlotTileNode: SKEffectNode {
             }
             plantImage.texture = SKTexture(imageNamed: imageName)
             plantImage.isHidden = false
-            plantImage.alpha = displayPreview ? 0.5 : 1.0
+            plantImage.alpha = displayPreview && !plant.stunted ? 0.5 : 1.0
             plantImage.colorBlendFactor = plant.stunted ? 1 : 0
             harvestParticle?.isPaused = growthPercentage < 100
             harvestParticle?.isHidden = growthPercentage < 100
