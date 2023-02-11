@@ -7,7 +7,7 @@
 
 import SpriteKit
 
-enum PlantSpecies: String {
+enum PlantSpecies: String, CaseIterable {
     case Cabbage
     case Carrot
     case Chard
@@ -65,7 +65,7 @@ struct Plant {
         self.hue = hue
         self.root.addHue(hue: hue)
     }
-    
+
     var segmentPositions: [(RootSegment, PlantRelativePosition)] {
         return root.computeSegmentPositions(plantRelativePosition: PlantRelativePosition(x: 0, y: 0))
     }
@@ -76,6 +76,24 @@ struct Plant {
 }
 
 extension Plant {
+    static func randomPlant() -> Plant {
+        let plantsCount = PlantSpecies.allCases.count
+        let randomSpeciesIndex = Int(arc4random()) % plantsCount
+        let plantSpecies = PlantSpecies.allCases[randomSpeciesIndex]
+        return plantForSepecies(plantSpecies: plantSpecies)
+    }
+
+    static func plantForSepecies(plantSpecies: PlantSpecies) -> Plant {
+        switch plantSpecies {
+        case .Carrot: return carrot()
+        case .Chard: return chard()
+        case .Herb: return herb()
+        case .Cabbage: return cabbage()
+        case .Tomato: return tomato()
+        case .Mustard: return mustard()
+        }
+    }
+
     static func carrot() -> Plant {
         let downFive = RootSegment(parentDirection: .up, left: nil, right: nil, up: nil, down: nil)
         let downFour = RootSegment(parentDirection: .up, left: nil, right: nil, up: nil, down: downFive)
@@ -83,7 +101,7 @@ extension Plant {
         let downTwo = RootSegment(parentDirection: .up, left: nil, right: nil, up: nil, down: downThree)
         let downOne = RootSegment(parentDirection: .up, left: nil, right: nil, up: nil, down: downTwo)
         let root = RootSegment(parentDirection: .up, left: nil, right: nil, up: nil, down: downOne)
-        
+
         return Plant(species: .Carrot, root: root, award: 5, hue: 0 / 6)
     }
 
@@ -103,7 +121,7 @@ extension Plant {
 
         return Plant(species: .Chard, root: root, award: 10, hue: 1 / 6)
     }
-    
+
     static func herb() -> Plant {
         let fiveRight = RootSegment(parentDirection: .left, left: nil, right: nil, up: nil, down: nil)
         let fiveLeft = RootSegment(parentDirection: .right, left: nil, right: nil, up: nil, down: nil)
@@ -115,7 +133,7 @@ extension Plant {
 
         return Plant(species: .Herb, root: one, award: 5, hue: 2 / 6)
     }
-    
+
     static func cabbage() -> Plant {
         let threeRight = RootSegment(parentDirection: .up, left: nil, right: nil, up: nil, down: nil)
         let threeLeft = RootSegment(parentDirection: .up, left: nil, right: nil, up: nil, down: nil)
@@ -129,7 +147,7 @@ extension Plant {
 
         return Plant(species: .Cabbage, root: one, award: 5, hue: 3 / 6)
     }
-    
+
     static func tomato() -> Plant {
         let sixRightRight = RootSegment(parentDirection: .left, left: nil, right: nil, up: nil, down: nil)
         let sixRight = RootSegment(parentDirection: .left, left: nil, right: sixRightRight, up: nil, down: nil)
@@ -148,9 +166,9 @@ extension Plant {
 
         return Plant(species: .Tomato, root: one, award: 10, hue: 4 / 6)
     }
-    
+
     static func mustard() -> Plant {
-        
+
         let oneRightDown = RootSegment(parentDirection: .up, left: nil, right: nil, up: nil, down: nil)
         let oneRight = RootSegment(parentDirection: .left, left: nil, right: nil, up: nil, down: oneRightDown)
         let oneLeftDown = RootSegment(parentDirection: .up, left: nil, right: nil, up: nil, down: nil)
@@ -160,3 +178,4 @@ extension Plant {
         return Plant(species: .Mustard, root: one, award: 3, hue: 5 / 6)
     }
 }
+

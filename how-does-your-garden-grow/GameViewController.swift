@@ -9,41 +9,59 @@ import UIKit
 import SpriteKit
 import GameplayKit
 
+enum GameMode {
+    case puzzle
+    case endless
+}
+
 class GameViewController: UIViewController, GameSceneDelegate {
 
     var skView: SKView!
-    var scene: GameScene?
+    var scene: GameScene!
+    var gameMode = GameMode.endless
     var levelNumber = 0
     var totalScore = 0
-    var started = false
-    
+
+    var hasShownTutorial = false
+
     @IBOutlet weak var gameOverLabel: UILabel!
     @IBOutlet weak var scoreLabel: UILabel!
-    @IBOutlet weak var restartButton: UIButton!
-    @IBAction func restart(_ sender: Any) {
+    @IBOutlet weak var startSeasonsButton: UIButton!
+    @IBOutlet weak var startEndlessButton: UIButton!
+
+    @IBAction func startSeasons(_ sender: Any) {
         levelNumber = 0
-        gameOverLabel.isHidden = true
-        scoreLabel.isHidden = true
-        restartButton.isHidden = true
-        presentScene()
+        startGame(nextGameMode: .puzzle)
     }
-    
+
+    @IBAction func startEndless(_ sender: Any) {
+        startGame(nextGameMode: .endless)
+    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
         skView = view as? SKView
-        presentScene()
+        startGame(nextGameMode: .endless)
     }
 
-    func presentScene() {
-        let scene = GameScene(size: skView.frame.size)
-        scene.gameSceneDelegate = self
-        scene.level = Level.levels[levelNumber]
-        scene.levelNumber = levelNumber
-        scene.started = started
+    func startGame(nextGameMode: GameMode) {
+        gameMode = nextGameMode
+        gameOverLabel.isHidden = true
+        scoreLabel.isHidden = true
+
+        startSeasonsButton?.isHidden = hasShownTutorial
+        startEndlessButton?.isHidden = hasShownTutorial
+
+        scene = GameScene(
+            size: skView.frame.size,
+            delegate: self,
+            showTutorial: !hasShownTutorial,
+            level: gameMode == .puzzle ? Level.levels[levelNumber] : nil
+        )
         scene.scaleMode = .aspectFill
         scene.view?.ignoresSiblingOrder = true
         skView.presentScene(scene)
-        self.scene = scene
+        hasShownTutorial = true
     }
 
     override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
@@ -57,24 +75,20 @@ class GameViewController: UIViewController, GameSceneDelegate {
     override var prefersStatusBarHidden: Bool {
         return true
     }
-    
-    func gameDidStart(_ started: Bool) {
-        self.started = started
-    }
-    
+
     func gameDidFinish(score: Int) {
         levelNumber += 1
         totalScore += score
-        if levelNumber < Level.levels.count {
-            presentScene()
+        if gameMode == .puzzle && levelNumber < Level.levels.count {
+            startGame(nextGameMode: .puzzle)
         } else {
-            started = false
             scene?.isPaused = true
             scoreLabel.text = "Total Score: \(totalScore)"
             totalScore = 0
             gameOverLabel.isHidden = false
             scoreLabel.isHidden = false
-            restartButton.isHidden = false
+            startSeasonsButton.isHidden = false
+            startEndlessButton.isHidden = false
         }
     }
 }

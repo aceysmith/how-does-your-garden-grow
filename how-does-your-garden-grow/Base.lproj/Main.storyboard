@@ -34,36 +34,51 @@
                                 <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="RLs-z3-r7J">
-                                <rect key="frame" x="631.5" y="839" width="103" height="35"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="35" id="VTs-Bg-h6S"/>
-                                </constraints>
-                                <state key="normal" title="Button"/>
-                                <buttonConfiguration key="configuration" style="filled" title="Play Again">
-                                    <color key="baseForegroundColor" systemColor="labelColor"/>
-                                    <color key="baseBackgroundColor" systemColor="systemGreenColor"/>
-                                </buttonConfiguration>
-                                <connections>
-                                    <action selector="restart:" destination="BV1-FR-VrT" eventType="touchUpInside" id="plC-tb-8rx"/>
-                                </connections>
-                            </button>
+                            <stackView opaque="NO" contentMode="scaleToFill" spacing="100" translatesAutoresizingMaskIntoConstraints="NO" id="EtA-mp-niZ">
+                                <rect key="frame" x="508" y="847" width="350" height="34.5"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qk0-v6-DgM">
+                                        <rect key="frame" x="0.0" y="0.0" width="125" height="34.5"/>
+                                        <state key="normal" title="Button"/>
+                                        <buttonConfiguration key="configuration" style="filled" title="Play Seasons">
+                                            <color key="baseForegroundColor" systemColor="labelColor"/>
+                                            <color key="baseBackgroundColor" systemColor="systemGreenColor"/>
+                                        </buttonConfiguration>
+                                        <connections>
+                                            <action selector="startSeasons:" destination="BV1-FR-VrT" eventType="touchUpInside" id="Vt7-jl-TMo"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="a6U-VX-F79">
+                                        <rect key="frame" x="225" y="0.0" width="125" height="34.5"/>
+                                        <state key="normal" title="Button"/>
+                                        <buttonConfiguration key="configuration" style="filled" title="Play Endless">
+                                            <color key="baseForegroundColor" systemColor="labelColor"/>
+                                            <color key="baseBackgroundColor" systemColor="systemGreenColor"/>
+                                        </buttonConfiguration>
+                                        <connections>
+                                            <action selector="startEndless:" destination="BV1-FR-VrT" eventType="touchUpInside" id="BJR-0Y-SzU"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                            </stackView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="4qk-I5-YsI"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="Zkg-qq-x2d" firstAttribute="centerX" secondItem="4qk-I5-YsI" secondAttribute="centerX" id="5Sd-pS-u8Y"/>
-                            <constraint firstItem="4qk-I5-YsI" firstAttribute="bottom" secondItem="RLs-z3-r7J" secondAttribute="bottom" constant="130" id="DEZ-aN-Wui"/>
-                            <constraint firstItem="RLs-z3-r7J" firstAttribute="centerX" secondItem="4qk-I5-YsI" secondAttribute="centerX" id="h3C-VH-GyZ"/>
-                            <constraint firstItem="RLs-z3-r7J" firstAttribute="top" secondItem="vuj-SO-ssf" secondAttribute="bottom" constant="50" id="jaz-ay-eu4"/>
+                            <constraint firstItem="EtA-mp-niZ" firstAttribute="top" secondItem="vuj-SO-ssf" secondAttribute="bottom" constant="58" id="CsL-Nh-wbc"/>
+                            <constraint firstItem="4qk-I5-YsI" firstAttribute="bottom" secondItem="vuj-SO-ssf" secondAttribute="bottom" constant="215" id="M2g-hs-Huo"/>
                             <constraint firstItem="vuj-SO-ssf" firstAttribute="centerX" secondItem="4qk-I5-YsI" secondAttribute="centerX" id="pSW-61-8aq"/>
+                            <constraint firstItem="4qk-I5-YsI" firstAttribute="bottom" secondItem="EtA-mp-niZ" secondAttribute="bottom" constant="122.5" id="q05-wS-jrh"/>
                             <constraint firstItem="vuj-SO-ssf" firstAttribute="top" secondItem="Zkg-qq-x2d" secondAttribute="bottom" constant="10" id="q1h-5f-U2v"/>
+                            <constraint firstItem="EtA-mp-niZ" firstAttribute="centerX" secondItem="4qk-I5-YsI" secondAttribute="centerX" id="yFd-1X-3gW"/>
                         </constraints>
                     </view>
                     <connections>
                         <outlet property="gameOverLabel" destination="Zkg-qq-x2d" id="2tX-Vi-bPt"/>
-                        <outlet property="restartButton" destination="RLs-z3-r7J" id="54A-VQ-d1w"/>
                         <outlet property="scoreLabel" destination="vuj-SO-ssf" id="xmJ-yO-7tA"/>
+                        <outlet property="startEndlessButton" destination="a6U-VX-F79" id="sOV-fh-XyE"/>
+                        <outlet property="startSeasonsButton" destination="qk0-v6-DgM" id="Pg5-ih-gjf"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="SZV-WD-TEh" sceneMemberID="firstResponder"/>

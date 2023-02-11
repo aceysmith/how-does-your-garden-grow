@@ -6,6 +6,7 @@
 //
 
 struct Level {
+    let name: String
     let plants: [Plant]
     func plantForTurn(turn: Int) -> Plant? {
         if turn < plants.count {
@@ -23,7 +24,7 @@ extension Level {
         .winter()
     ]
     static func spring() -> Level {
-        return Level(plants: [
+        return Level(name: "Spring", plants: [
             .herb(),
             .carrot(),
             .cabbage(),
@@ -42,7 +43,7 @@ extension Level {
         ])
     }
     static func summer() -> Level {
-        return Level(plants: [
+        return Level(name: "Summer", plants: [
             .mustard(),
             .tomato(),
             .carrot(),
@@ -60,7 +61,7 @@ extension Level {
         ])
     }
     static func fall() -> Level {
-        return Level(plants: [
+        return Level(name: "Fall", plants: [
             .carrot(),
             .cabbage(),
             .herb(),
@@ -77,7 +78,7 @@ extension Level {
         ])
     }
     static func winter() -> Level {
-        return Level(plants: [
+        return Level(name: "Winter", plants: [
             .tomato(),
             .carrot(),
             .cabbage(),
@@ -93,3 +94,4 @@ extension Level {
         ])
     }
 }
+
