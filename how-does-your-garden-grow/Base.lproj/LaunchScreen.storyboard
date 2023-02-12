@@ -19,14 +19,23 @@
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="dirt" translatesAutoresizingMaskIntoConstraints="NO" id="Sme-ke-dTe">
                                 <rect key="frame" x="0.0" y="0.0" width="1180" height="820"/>
                             </imageView>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="title" translatesAutoresizingMaskIntoConstraints="NO" id="GiA-pR-fMx">
+                                <rect key="frame" x="99.5" y="335" width="981" height="150"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="150" id="Voy-ii-Q0d"/>
+                                    <constraint firstAttribute="width" constant="981" id="r75-tU-KwB"/>
+                                </constraints>
+                            </imageView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstAttribute="trailing" secondItem="Sme-ke-dTe" secondAttribute="trailing" id="K0R-hu-0Q5"/>
+                            <constraint firstItem="GiA-pR-fMx" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="WEV-x3-8Tk"/>
                             <constraint firstItem="Sme-ke-dTe" firstAttribute="top" secondItem="Ze5-6b-2t3" secondAttribute="top" id="cTe-14-hLy"/>
                             <constraint firstItem="Sme-ke-dTe" firstAttribute="leading" secondItem="Ze5-6b-2t3" secondAttribute="leading" id="cUS-uL-v7i"/>
                             <constraint firstAttribute="bottom" secondItem="Sme-ke-dTe" secondAttribute="bottom" id="miH-E3-VjR"/>
+                            <constraint firstItem="GiA-pR-fMx" firstAttribute="centerY" secondItem="Ze5-6b-2t3" secondAttribute="centerY" id="qNr-0H-2p1"/>
                         </constraints>
                     </view>
                 </viewController>
@@ -37,6 +46,7 @@
     </scenes>
     <resources>
         <image name="dirt" width="2224" height="1668"/>
+        <image name="title" width="1308" height="150"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
