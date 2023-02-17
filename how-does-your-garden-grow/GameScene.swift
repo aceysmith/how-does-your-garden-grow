@@ -294,7 +294,7 @@ class GameScene: SKScene {
     }
 
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
-        if isPaused {
+        if isPaused && showTutorial {
             titleLabel?.isHidden = true
             helpLabel?.isHidden = true
             scoreLabel?.isHidden = false
